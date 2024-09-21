@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PracticeApplicationBRG</string>
+    <string name="brainrotgames">BrainRotGames</string>
+    <string name="brain_icon">Brain icon</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="Register">Register</string>
+    <string name="settings">Settings</string>
+    <string name="default_web_client_id">AIzaSyDETBDjyH8wywGeeI7gJMy1AzVGJ7SHtnw</string>
+
+</resources>
