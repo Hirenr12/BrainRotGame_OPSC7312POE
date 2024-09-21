@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:id="@+id/tierImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fresh_meat" />
+
+    <TextView
+        android:id="@+id/tierTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tier 1"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/tierPoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Points required: 100"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+</LinearLayout>
