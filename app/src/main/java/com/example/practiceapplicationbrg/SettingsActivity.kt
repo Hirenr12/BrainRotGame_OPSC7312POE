@@ -1,5 +1,6 @@
 package com.example.practiceapplicationbrg
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -18,10 +19,14 @@ class SettingsActivity : AppCompatActivity() {
 
         accountDetailsButton.setOnClickListener {
             // Account Details button click
+            val intent = Intent(this, AccountDetailsActivity::class.java)
+            startActivity(intent)
         }
 
         privacyPolicyButton.setOnClickListener {
             // Privacy Policy button click
+            val intent = Intent(this, PrivacyPolicyActivity::class.java)
+            startActivity(intent)
         }
 
         notificationsButton.setOnClickListener {
@@ -30,6 +35,8 @@ class SettingsActivity : AppCompatActivity() {
 
         supportFeedbackButton.setOnClickListener {
             // Support and Feedback button click
+            val intent = Intent(this, SupportFeedbackActivity::class.java)
+            startActivity(intent)
         }
     }
 }
