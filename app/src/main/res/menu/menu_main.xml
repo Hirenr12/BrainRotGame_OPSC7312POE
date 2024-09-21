@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
+        android:textColor="@color/black"/>   <!-- Icon tint if needed -->
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
+
+    <item
+        android:id="@+id/action_daily_challenge"
+        android:icon="@drawable/ic_daily_challenge"
+        android:title="Daily Challenge"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
+
+    <item
+        android:id="@+id/action_leader_board"
+        android:icon="@drawable/ic_leader_board"
+        android:title="Leader Board"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
+
+    <item
+        android:id="@+id/action_sign_out"
+        android:icon="@drawable/ic_sign_out"
+        android:title="Sign Out"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
+</menu>
