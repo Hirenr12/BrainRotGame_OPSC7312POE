@@ -6,6 +6,6 @@
     <string name="Register">Register</string>
     <string name="settings">Settings</string>
     <string name="default_web_client_id">236017016549-0vu5rh3lo1unn1dpp2au7eebn1dumbhh.apps.googleusercontent.com</string>
-
+    <string name="msg_token_fmt">FCM Registration Token: %1$s</string>
 
 </resources>
