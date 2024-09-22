@@ -23,14 +23,14 @@ class ActivityPlayersJournal : AppCompatActivity() {
 
         val tiers = listOf(
             Tier("Fresh Meat", 100, R.drawable.fresh_meat),
-//            Tier("Infected", 200, R.drawable.infected),
-//            Tier("Walker", 300, R.drawable.walker),
-//            Tier("Tier 4", 400, R.drawable.tier4),
-//            Tier("Tier 5", 500, R.drawable.tier5),
-//            Tier("Tier 6", 600, R.drawable.tier6),
-//            Tier("Tier 7", 700, R.drawable.tier7),
-//            Tier("Tier 8", 800, R.drawable.tier8),
-//            Tier("Tier 9", 900, R.drawable.tier9)
+            Tier("Infected", 200, R.drawable.infected),
+            Tier("Walker", 300, R.drawable.walker),
+            Tier("Rotter", 400, R.drawable.rotter),
+            Tier("Revenant 5", 500, R.drawable.revenant),
+            Tier("Night stalker 6", 600, R.drawable.nightstalker),
+            Tier("Necromancer 7", 700, R.drawable.necromancer),
+            Tier("Warlord 8", 800, R.drawable.warlord),
+            Tier("Dread lord", 900, R.drawable.dreadlord)
         )
 
         tierAdapter = TierAdapter(tiers)
