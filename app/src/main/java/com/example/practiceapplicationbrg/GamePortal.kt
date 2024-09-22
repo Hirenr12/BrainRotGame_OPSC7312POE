@@ -81,7 +81,9 @@ class GamePortal : AppCompatActivity() {
                 true
             }
             R.id.action_settings -> {
-                // Handle Settings navigation
+                // Navigate to SettingsActivity
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.action_daily_challenge -> {
