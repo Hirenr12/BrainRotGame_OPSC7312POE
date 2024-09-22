@@ -1,8 +1,11 @@
 package com.example.practiceapplicationbrg
 
+import android.app.NotificationManager
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,16 +13,23 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
+
+    private val channelID = "My Channel ID"
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
+        /*
         //Firebase Messaging
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -35,6 +45,23 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, msg)
             Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
+         */
+
+
+
+        // Check if notifications are enabled and handle accordingly
+        if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+            showDeviceNotificationSettingsDialog()
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationManagerCompat.from(this).getNotificationChannel(channelID)
+            if (channel == null || channel.importance == NotificationManager.IMPORTANCE_NONE) {
+                showAppNotificationSettingsDialog()
+            }
+        }
+
+
+
+
 
 
 
@@ -66,4 +93,43 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
+
+
+
+
+
+    private fun showDeviceNotificationSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Notifications Disabled")
+            .setMessage("Please enable notifications for this app to receive notifications.")
+            .setPositiveButton("Settings") { _, _ ->
+                startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                })
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun showAppNotificationSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("App Notifications Disabled")
+            .setMessage("Please enable notifications for this app to receive notifications.")
+            .setPositiveButton("Settings") { _, _ ->
+                startActivity(Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    putExtra(Settings.EXTRA_CHANNEL_ID, channelID)
+                })
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+
+
+
+
+
 }
