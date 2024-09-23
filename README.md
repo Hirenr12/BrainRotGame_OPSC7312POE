@@ -23,7 +23,7 @@
 
 ## Features
 
-### Role-Based Access Control:
+### Access Control:
 - 
 
 ### Common Features:
