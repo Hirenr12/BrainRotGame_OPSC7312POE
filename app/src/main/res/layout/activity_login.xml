@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".Login">
 
     <TextView
@@ -96,13 +97,17 @@
             app:tint="#DB4437" />
 
         <TextView
+            android:id="@+id/txtSignInGoogle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:text="Sign in with Google"
-            android:textColor="#757575"
-            android:textStyle="bold" />
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/sign_in_with_google"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
