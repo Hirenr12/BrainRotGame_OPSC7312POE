@@ -38,7 +38,8 @@ class GamePortal : AppCompatActivity() {
         // Set up the toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
+// Remove default toolbar title
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         // Initialize the GameAdapter
         gameAdapter = GameAdapter(games, { game ->
             game.isFavorite = !game.isFavorite
