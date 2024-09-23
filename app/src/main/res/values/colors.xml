@@ -8,5 +8,7 @@
         <color name="gray_600">#757575</color>
         <color name="green_800">#2e7d32</color>
     <color name="blue">#4BB2F9</color>
+    <color name="colorPrimary" />
+    <color name="colorAccent">#F44336</color>
 
 </resources>
