@@ -14,12 +14,37 @@ object PointsManager {
                 val snapshot = transaction.get(userRef)
                 val currentPoints = snapshot.getLong("points") ?: 0
                 val newPoints = currentPoints + pointsToAdd
+
+                // Update the user's points
                 transaction.update(userRef, "points", newPoints)
+
+                // Determine the new tier based on points
+                val newTier = getTierForPoints(newPoints.toInt())
+                if (newTier != snapshot.getString("tier")) {
+                    transaction.update(userRef, "tier", newTier)
+                }
             }.addOnSuccessListener {
-                Toast.makeText(context, "Points updated!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Points and tier updated!", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e ->
-                Toast.makeText(context, "Failed to update points: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Failed to update points/tier: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }
+
+    // Function to determine the tier based on points
+    private fun getTierForPoints(points: Int): String {
+        return when {
+            points >= 900 -> "Dread lord"
+            points >= 800 -> "Warlord"
+            points >= 700 -> "Necromancer"
+            points >= 600 -> "Night stalker"
+            points >= 500 -> "Revenant"
+            points >= 400 -> "Rotter"
+            points >= 300 -> "Walker"
+            points >= 200 -> "Infected"
+            points >= 100 -> "Fresh Meat"
+            else -> "Newbie"
+        }
+    }
 }
+
