@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -47,19 +48,23 @@ class Login : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Get references to the input fields and buttons
+        // Get references to the input fields, buttons, and the TextView
         val emailField: EditText = findViewById(R.id.email)
         val passwordField: EditText = findViewById(R.id.password)
         val submitButton: Button = findViewById(R.id.submit_button)
-        val googleSignInButton: ImageView = findViewById(R.id.ic_google) // Reference to the Google sign-in icon
+        val googleSignInButton: ImageView = findViewById(R.id.ic_google)
+        val txtSignInGoogle: TextView = findViewById(R.id.txtSignInGoogle)  // Reference to the TextView
 
         // Set up the submit button click listener
         submitButton.setOnClickListener {
             loginUser(emailField.text.toString(), passwordField.text.toString())
         }
 
-        // Set up Google sign-in button click listener
+        // Set up Google sign-in button and TextView click listeners
         googleSignInButton.setOnClickListener {
+            signInWithGoogle()
+        }
+        txtSignInGoogle.setOnClickListener {  // Make the TextView clickable
             signInWithGoogle()
         }
     }
@@ -88,7 +93,7 @@ class Login : AppCompatActivity() {
 
     private fun signInWithGoogle() {
         val signInIntent: Intent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivityForResult(signInIntent, RC_SIGN_IN)  // Removed the incorrect txtSignInGoogle parameter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,3 +130,4 @@ class Login : AppCompatActivity() {
         }
     }
 }
+
