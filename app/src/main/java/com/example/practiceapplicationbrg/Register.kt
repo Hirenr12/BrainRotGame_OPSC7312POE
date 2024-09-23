@@ -10,17 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Register : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_register)
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         // Set up edge-to-edge insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -64,7 +67,11 @@ class Register : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // User registration successful, navigate to login page
+                    // User registration successful, assign 100 initial points
+                    val user = auth.currentUser
+                    user?.let {
+                        saveUserToFirestore(it.uid, username, email)
+                    }
                     Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, Login::class.java))
                     finish() // Optional: Close the Register activity
@@ -72,6 +79,26 @@ class Register : AppCompatActivity() {
                     // Handle registration failure
                     Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
+            }
+    }
+
+    private fun saveUserToFirestore(userId: String, username: String, email: String) {
+        // Create a user object with initial 100 points and first tier unlocked
+        val userMap = hashMapOf(
+            "username" to username,
+            "email" to email,
+            "points" to 100, // Initial points assigned
+            "tier" to "Fresh Meat" // Unlock first tier
+        )
+
+        // Save user info to Firestore
+        db.collection("users").document(userId)
+            .set(userMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "User saved to Firestore", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to save user: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
