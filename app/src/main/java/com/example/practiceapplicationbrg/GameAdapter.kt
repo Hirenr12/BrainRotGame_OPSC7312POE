@@ -1,4 +1,5 @@
 package com.example.practiceapplicationbrg
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class GameAdapter(
     private val games: MutableList<Game>,
     private val onFavoriteClick: (Game) -> Unit,
-    private val onGameClick: (Game) -> Unit // New parameter for game click
+    private val onGameClick: (Game) -> Unit
 ) : RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
@@ -25,8 +26,8 @@ class GameAdapter(
             onFavoriteClick(game)
         }
 
-        holder.itemView.setOnClickListener { // Add click listener for the entire item
-            onGameClick(game) // Call the new callback
+        holder.itemView.setOnClickListener {
+            onGameClick(game)
         }
     }
 
