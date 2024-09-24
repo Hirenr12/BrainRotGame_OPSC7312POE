@@ -8,5 +8,9 @@
     <string name="default_web_client_id">236017016549-0vu5rh3lo1unn1dpp2au7eebn1dumbhh.apps.googleusercontent.com</string>
     <string name="msg_token_fmt">FCM Registration Token: %1$s</string>
     <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="account_details">Account Details</string>
+    <string name="username">Username:</string>
+    <string name="points_0">Points: 0</string>
+    <string name="tier">Tier:</string>
 
 </resources>
