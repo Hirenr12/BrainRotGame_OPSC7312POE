@@ -11,13 +11,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      
+        uses: actions/checkout@v3  # Updated to v3 for Node 20 compatibility
+
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'  # or 'temurin' depending on your preference
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Give execute permissions to gradlew
+        run: |
+          chmod 755 ./gradlew
+          ls -l ./gradlew
+
+      - name: Build APK and AAB
+        run: ./gradlew assembleDebug assembleRelease
