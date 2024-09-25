@@ -38,6 +38,9 @@ class ActivityPlayersJournal : AppCompatActivity() {
                     if (document != null) {
                         userPoints = document.getLong("points")?.toInt() ?: 0
                         updateTiers(userPoints)
+
+                        // Optionally update points/tier here
+                        PointsManager.updateUserPoints(firestore, auth, 0, this) // 0 means no points added, but tier gets checked
                     } else {
                         Toast.makeText(this, "No user data found", Toast.LENGTH_SHORT).show()
                     }
