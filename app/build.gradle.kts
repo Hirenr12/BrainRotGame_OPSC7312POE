@@ -59,6 +59,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.android.gms:play-services-auth:20.1.0")
 
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
 
 }
