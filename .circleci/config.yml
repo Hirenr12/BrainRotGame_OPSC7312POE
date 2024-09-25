@@ -1,37 +1,38 @@
 version: 2.1
 
 jobs:
-  say-hello:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - run: echo "Hello, world!"
-
   sonarqube:
-    docker:
-      - image: circleci/python:3.8  # Changed the image to one that supports apt-get
-    resource_class: small
+    machine: 
+      image: circleci/windows:servercore-1809  # Use an appropriate Windows image
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y findutils
-      - run: find .  # This should now work
-      - attach_workspace:
-          at: ~/workspace
-      - run: |
-          SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
-          echo "Sonar branch value is: $SONAR_BRANCH"
-          echo "Sonar org value is: $SONAR_ORG"
-          sonar-scanner \
-            -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
-            -Dsonar.organization="$SONAR_ORG" \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.exclusions="**/android/**,**/ios/**" \
-            -Dsonar.login="$SONAR_TOKEN" \
-            -Dsonar.branch.name="$SONAR_BRANCH" \
-            -Dsonar.sources="."
+      - checkout
+      - run:
+          name: Install Chocolatey (if not already installed)
+          command: |
+            @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;C:\ProgramData\chocolatey\bin"
+      
+      - run:
+          name: Install Sonar Scanner
+          command: |
+            choco install sonar-scanner
+
+      - run:
+          name: Run Sonar Scanner
+          command: |
+            SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
+            echo "Sonar branch value is: $SONAR_BRANCH"
+            echo "Sonar org value is: $SONAR_ORG"
+            sonar-scanner ^
+              -Dsonar.projectKey="$SONAR_PROJECT_KEY" ^
+              -Dsonar.organization="$SONAR_ORG" ^
+              -Dsonar.host.url=https://sonarcloud.io ^
+              -Dsonar.exclusions="**/android/**,**/ios/**" ^
+              -Dsonar.login="$SONAR_TOKEN" ^
+              -Dsonar.branch.name="$SONAR_BRANCH" ^
+              -Dsonar.sources="."
 
 workflows:
   version: 2
   say-hello-workflow:
     jobs:
-      - say-hello
       - sonarqube
