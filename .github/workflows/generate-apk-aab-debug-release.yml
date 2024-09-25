@@ -21,8 +21,10 @@ jobs:
 
       - name: Give execute permissions to gradlew
         run: |
-          chmod 755 ./gradlew
+          sudo chmod 755 ./gradlew
           ls -l ./gradlew
+          id -u
+          id -gn
 
       - name: Build APK and AAB
         run: ./gradlew assembleDebug assembleRelease
