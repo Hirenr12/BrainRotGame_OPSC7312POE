@@ -18,8 +18,10 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Change permissions of gradlew
-        run: sudo chmod 755 ./gradlew
+      - name: Give execute permissions to gradlew
+        run: |
+          chmod 755 ./gradlew
+          ls -l ./gradlew
 
       - name: Build APK and AAB
         run: ./gradlew assembleDebug assembleRelease
