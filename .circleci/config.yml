@@ -2,15 +2,16 @@ version: 2.1
 
 jobs:
   sonarqube:
-    machine: 
-      image: circleci/windows:servercore-1809  # Use an appropriate Windows image
+    machine:
+      image: circleci/windows:servercore-1809  # Specify a valid Windows image
+      resource_class: windows.large  # Use a valid resource class
     steps:
       - checkout
       - run:
           name: Install Chocolatey (if not already installed)
           command: |
             @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;C:\ProgramData\chocolatey\bin"
-      
+
       - run:
           name: Install Sonar Scanner
           command: |
