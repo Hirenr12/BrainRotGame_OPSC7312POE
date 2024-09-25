@@ -1,13 +1,19 @@
 version: 2.1
 
 jobs:
+  say-hello:
+    docker:
+      - image: circleci/python:3.8  # You can choose an image that suits your project.
+    steps:
+      - run: echo "Hello, world!"
+
   sonarqube:
     working_directory: ~/build
     docker:
-      - image: circleci/python:3.8  # You can choose an image that suits your project.
+      - image: sonarsource/sonar-scanner-cli
     resource_class: small
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y findutils  # Install findutils
+      - run: sudo apt-get update && sudo apt-get install -y findutils  # Ensure find is installed
       - run: find .  # This should now work
       - attach_workspace:
           at: ~/workspace
