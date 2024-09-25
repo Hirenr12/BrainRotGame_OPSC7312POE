@@ -8,12 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  
+        uses: actions/checkout@v3  # Update to v3 for Node 20 compatibility
+
       - name: Set up JDK
-        uses: actions/setup-java@v3  
+        uses: actions/setup-java@v3  # Update to v3 for Node 20 compatibility
         with:
           java-version: '11'
 
