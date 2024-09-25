@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Update to v3 for Node 20 compatibility
+        uses: actions/checkout@v3  # Updated to v3 for Node 20 compatibility
 
       - name: Set up JDK
-        uses: actions/setup-java@v3  # Update to v3 for Node 20 compatibility
+        uses: actions/setup-java@v3  # Updated to v3 for Node 20 compatibility
         with:
           java-version: '11'
 
