@@ -12,7 +12,7 @@ jobs:
     docker:
       - image: sonarsource/sonar-scanner-cli
     resource_class: small
-steps:
+    steps:                           # Corrected indentation, moved 'steps' under 'sonarqube'
       - run: apt-get update && apt-get install -y findutils  # Removed sudo
       - run: find .
       - attach_workspace:
