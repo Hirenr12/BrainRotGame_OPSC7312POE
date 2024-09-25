@@ -17,6 +17,7 @@ jobs:
     resource_class: small
     steps:
       - run: |
+          apk update
           apk add --no-cache sonar-scanner
           SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
           echo "Sonar branch value is: $SONAR_BRANCH"
