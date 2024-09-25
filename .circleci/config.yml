@@ -14,10 +14,9 @@ jobs:
   sonarqube:
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli
+      - image: circleci/android:api-30
     resource_class: small
     steps:
-      - run: apk add --no-cache findutils
       - run: find .
       - attach_workspace:
           at: ~/workspace
