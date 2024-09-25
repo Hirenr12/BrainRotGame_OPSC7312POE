@@ -87,8 +87,8 @@ class Register : AppCompatActivity() {
         val userMap = hashMapOf(
             "username" to username,
             "email" to email,
-            "points" to 100, // Initial points assigned
-            "tier" to "Fresh Meat" // Unlock first tier
+            "points" to 0, // Initial points assigned
+            "tier" to "" // Unlock first tier
         )
 
         // Save user info to Firestore
