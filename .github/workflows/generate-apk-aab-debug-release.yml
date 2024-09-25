@@ -18,5 +18,8 @@ jobs:
         with:
           java-version: '11'
 
+      - name: Give execute permissions to gradlew
+        run: chmod +x ./gradlew
+
       - name: Build APK and AAB
         run: ./gradlew assembleDebug assembleRelease
