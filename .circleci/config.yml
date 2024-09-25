@@ -13,7 +13,7 @@ jobs:
 
   sonarqube:
     docker:
-      - image: circleci/android:api-30
+      - image: alpine:latest
     resource_class: small
     steps:
       - run: |
