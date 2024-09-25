@@ -20,6 +20,12 @@
         android:theme="@style/Theme.PracticeApplicationBRG"
         tools:targetApi="31">
         <activity
+            android:name=".PrivateLeaderboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GlobalLeaderboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".DailyWheelActivity"
             android:exported="false" />
         <activity
