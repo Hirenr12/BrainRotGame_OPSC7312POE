@@ -4,20 +4,25 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.tasks.await
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class GlobalLeaderboardActivity : AppCompatActivity() {
 
@@ -26,17 +31,26 @@ class GlobalLeaderboardActivity : AppCompatActivity() {
     private lateinit var leaderboardAdapter: LeaderboardAdapter
     private val gamesList = mutableListOf<String>()
     private lateinit var apiService: ApiService
+    private var currentUserUsername: String? = null
+    private lateinit var auth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
 
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private lateinit var leaderboardImage: ImageView
+    private lateinit var headingRow: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this) // Initialize Firebase
+        FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_global_leaderboard)
 
-        // Initialize the RecyclerView before using it
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
         leaderboardRecyclerView = findViewById(R.id.leaderboardRecyclerView)
-        setupRecyclerView()  // Now this will not throw an error
+        setupRecyclerView()
+
+        leaderboardImage = findViewById(R.id.leaderboardImage) // Initialize ImageView
+        headingRow = findViewById(R.id.headingRow) // Initialize heading row
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,18 +61,52 @@ class GlobalLeaderboardActivity : AppCompatActivity() {
         gameComboBox = findViewById(R.id.gameComboBox)
 
         setupRetrofit()
+        fetchCurrentUserUsername()
         fetchGames()
 
         gameComboBox.setOnItemClickListener { parent, _, position, _ ->
             val selectedGame = parent.getItemAtPosition(position).toString()
-            Log.d("GlobalLeaderboardActivity", "Selected game: $selectedGame") // Log selected game
+            Log.d("GlobalLeaderboardActivity", "Selected game: $selectedGame")
             fetchLeaderboard(selectedGame)
         }
     }
 
+    private fun fetchCurrentUserUsername() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val currentUserUid = auth.currentUser?.uid ?: return@launch
+
+            try {
+                val documentSnapshot = db.collection("users").document(currentUserUid).get().await()
+                if (documentSnapshot.exists()) {
+                    currentUserUsername = documentSnapshot.getString("username")
+                    Log.d("GlobalLeaderboardActivity", "Fetched username: $currentUserUsername")
+                } else {
+                    Log.e("GlobalLeaderboardActivity", "User document not found")
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@GlobalLeaderboardActivity, "Failed to fetch user information", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("GlobalLeaderboardActivity", "Error fetching username", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@GlobalLeaderboardActivity, "Error fetching username", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     private fun setupRecyclerView() {
-        leaderboardAdapter = LeaderboardAdapter(emptyList())
+        leaderboardAdapter = LeaderboardAdapter(emptyList()) { selectedUser ->
+            Log.d("GlobalLeaderboardActivity", "User clicked: $selectedUser")
+            val selectedGame = gameComboBox.text.toString()
+            currentUserUsername?.let { currentUser ->
+                if (selectedGame.isNotEmpty()) {
+                    addToPrivateLeaderboard(currentUser, selectedUser, selectedGame)
+                } else {
+                    Log.e("GlobalLeaderboardActivity", "selectedGame is empty!")
+                }
+            } ?: Log.e("GlobalLeaderboardActivity", "currentUserUsername is null!")
+        }
         leaderboardRecyclerView.layoutManager = LinearLayoutManager(this)
         leaderboardRecyclerView.adapter = leaderboardAdapter
     }
@@ -88,17 +136,15 @@ class GlobalLeaderboardActivity : AppCompatActivity() {
                     )
 
                     gameComboBox.setAdapter(adapter)
-
-                    // Ensure the dropdown shows when the box is clicked or gains focus
                     gameComboBox.setOnFocusChangeListener { _, hasFocus ->
                         if (hasFocus) {
-                            gameComboBox.showDropDown()  // Show dropdown when it gains focus
+                            gameComboBox.showDropDown()
                         }
                     }
 
                     gameComboBox.setOnClickListener {
                         if (gameComboBox.adapter != null) {
-                            gameComboBox.showDropDown()  // Ensure dropdown shows on click
+                            gameComboBox.showDropDown()
                         }
                     }
                 }
@@ -111,23 +157,80 @@ class GlobalLeaderboardActivity : AppCompatActivity() {
         }
     }
 
-
     private fun fetchLeaderboard(selectedGame: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val leaderboardEntries = apiService.getLeaderboard(selectedGame)
-                // Sort the entries in descending order based on HighScore
                 val sortedEntries = leaderboardEntries.sortedByDescending { it.HighScore }
                 withContext(Dispatchers.Main) {
                     leaderboardAdapter.updateData(sortedEntries)
                 }
             } catch (e: Exception) {
+                Log.e("GlobalLeaderboardActivity", "Error fetching leaderboard", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@GlobalLeaderboardActivity, "Error fetching leaderboard", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
+    private fun addToPrivateLeaderboard(currentUser: String, selectedUser: String, gameName: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                Log.d("GlobalLeaderboardActivity", "Game Name: $gameName, Current User: $currentUser, Selected User: $selectedUser")
+
+                // Create the request object
+                val request = AddToPrivateLeaderboardRequest(
+                    gameName = gameName,
+                    currentUser = currentUser,
+                    selectedUser = selectedUser
+                )
+
+                // Use the modified API call
+                val response = apiService.addToPrivateLeaderboard(gameName, request)
+
+                if (response.isSuccessful) {
+                    Log.d("GlobalLeaderboardActivity", "User added to private leaderboard successfully.")
+
+                    // Show success toast message
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@GlobalLeaderboardActivity,
+                            "User $selectedUser added to private leaderboard!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                } else {
+                    Log.e("GlobalLeaderboardActivity", "Failed to add user: ${response.errorBody()?.string()}")
+
+                    // Optionally, show failure toast message
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@GlobalLeaderboardActivity,
+                            "Failed to add user to private leaderboard.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
+            } catch (e: Exception) {
+                Log.e("GlobalLeaderboardActivity", "Error adding user to private leaderboard", e)
+
+                // Optionally, show error toast message
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@GlobalLeaderboardActivity,
+                        "Error adding user to private leaderboard.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+        }
+    }
+
+
 
 
 }
