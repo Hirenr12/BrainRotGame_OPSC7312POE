@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
          */
 
 
-
         // Check if notifications are enabled and handle accordingly
         if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
             showDeviceNotificationSettingsDialog()
@@ -58,9 +58,6 @@ class MainActivity : AppCompatActivity() {
                 showAppNotificationSettingsDialog()
             }
         }
-
-
-
 
 
 
