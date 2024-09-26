@@ -15,6 +15,12 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
     private lateinit var tierImageView: ImageView
     private lateinit var btnSave: Button
 
+    // Define tiers and their rankings
+    private val tierArray = arrayOf(
+        "Fresh Meat", "Infected", "Walker", "Rotter", "Revenant",
+        "Nightstalker", "Necromancer", "Warlord", "Dreadlord"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_account_details)
@@ -39,10 +45,8 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
                         val currentTier = document.getString("tier")
                         etUsername.setText(currentUsername)
 
-                        // Set spinner to current tier
-                        val tierArray = resources.getStringArray(R.array.tier_array)
-                        val index = tierArray.indexOf(currentTier)
-                        spinnerTier.setSelection(index)
+                        // Populate the Spinner with tiers up to the current tier
+                        populateSpinnerWithLimitedTiers(currentTier)
 
                         // Set avatar image
                         updateTierImage(currentTier ?: "Fresh Meat")
@@ -71,6 +75,19 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun populateSpinnerWithLimitedTiers(currentTier: String?) {
+        // Get the index of the current tier
+        val currentTierIndex = tierArray.indexOf(currentTier)
+
+        // Limit the spinner options to tiers up to the current tier
+        val limitedTierArray = tierArray.sliceArray(0..currentTierIndex)
+
+        // Set the adapter for the spinner with limited options
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, limitedTierArray)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTier.adapter = adapter
     }
 
     private fun updateTierImage(tier: String) {

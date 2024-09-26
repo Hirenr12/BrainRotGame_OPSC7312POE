@@ -25,12 +25,6 @@
             android:name=".CustomAccountDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomAccountDetails"
-            android:exported="false" />
-        <activity
-            android:name=".CustomizeAccountDetails"
-            android:exported="false" />
-        <activity
             android:name=".SupportFeedbackActivity"
             android:exported="false" />
         <activity
