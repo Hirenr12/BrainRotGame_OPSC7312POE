@@ -19,6 +19,19 @@ class AccountDetailsActivity : AppCompatActivity() {
     private lateinit var tierImageView: ImageView
     private lateinit var btnCustomize: Button
 
+    // Tier mapping based on points
+    private val tierPointsMap = mapOf(
+        "Fresh Meat" to 0,
+        "Infected" to 200,
+        "Walker" to 300,
+        "Rotter" to 400,
+        "Revenant" to 500,
+        "Nightstalker" to 600,
+        "Necromancer" to 700,
+        "Warlord" to 800,
+        "Dreadlord" to 900
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_details)
@@ -47,40 +60,69 @@ class AccountDetailsActivity : AppCompatActivity() {
                     if (document != null) {
                         val username = document.getString("username")
                         val points = document.getLong("points")?.toInt() ?: 0
-                        val tier = document.getString("tier")
 
-                        // Update UI with user data
+                        // Calculate and update the tier based on points
+                        val userTier = calculateUserTier(points)
                         tvUsername.text = "Username: $username"
                         tvPoints.text = "Points: $points"
-                        tvTier.text = "Tier: $tier"
+                        tvTier.text = "Tier: $userTier"
 
-                        // Fetch the avatar image name (without extension)
-                        db.collection("users").document(it.uid)
-                            .collection("avatars").document("currentAvatar").get()
-                            .addOnSuccessListener { avatarDoc ->
-                                if (avatarDoc != null) {
-                                    val imageName = avatarDoc.getString("imageUrl")
-                                    if (!imageName.isNullOrEmpty()) {
-                                        // Remove the file extension (e.g., "fresh_meat.png" -> "fresh_meat")
-                                        val resourceName = imageName.substringBefore(".")
-                                        // Get the drawable resource ID by name
-                                        val imageResId = resources.getIdentifier(resourceName, "drawable", packageName)
+                        // Update the tier in Firestore if needed
+                        updateTierInFirestore(it.uid, userTier)
 
-                                        if (imageResId != 0) {
-                                            // Set the drawable to the ImageView
-                                            tierImageView.setImageResource(imageResId)
-                                        }
-                                    }
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                // Handle failure of fetching avatar image name
-                            }
+                        // Fetch and update avatar image based on tier
+                        updateAvatarImage(it.uid)
                     }
                 }
                 .addOnFailureListener { e ->
                     // Handle failure of fetching user data
                 }
         }
+    }
+
+    // Function to calculate the user's tier based on their points
+    private fun calculateUserTier(points: Int): String {
+        return tierPointsMap.entries
+            .filter { points >= it.value } // Filter only the tiers that the user qualifies for
+            .maxByOrNull { it.value }?.key ?: "Fresh Meat" // Get the highest tier or "Fresh Meat" as default
+    }
+
+    // Function to update the tier in Firestore if it's different from the current value
+    private fun updateTierInFirestore(userId: String, userTier: String) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                val currentTier = document.getString("tier")
+                if (currentTier != userTier) {
+                    db.collection("users").document(userId)
+                        .update("tier", userTier)
+                        .addOnSuccessListener {
+                            // Tier updated successfully
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle failure to update tier
+                        }
+                }
+            }
+    }
+
+    // Function to fetch and update the avatar image based on the current avatar stored in Firestore
+    private fun updateAvatarImage(userId: String) {
+        db.collection("users").document(userId)
+            .collection("avatars").document("currentAvatar").get()
+            .addOnSuccessListener { avatarDoc ->
+                if (avatarDoc != null) {
+                    val imageName = avatarDoc.getString("imageUrl")
+                    if (!imageName.isNullOrEmpty()) {
+                        val resourceName = imageName.substringBefore(".")
+                        val imageResId = resources.getIdentifier(resourceName, "drawable", packageName)
+                        if (imageResId != 0) {
+                            tierImageView.setImageResource(imageResId)
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failure of fetching avatar image name
+            }
     }
 }
