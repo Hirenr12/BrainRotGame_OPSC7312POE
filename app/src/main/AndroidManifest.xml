@@ -26,7 +26,7 @@
             android:name=".CustomAccountDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".SupportFeedbackActivity"
+            android:name=".SupportFeatureActivity"
             android:exported="false" />
         <activity
             android:name=".PrivacyPolicyActivity"
@@ -70,5 +70,5 @@
             </intent-filter>
         </service>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

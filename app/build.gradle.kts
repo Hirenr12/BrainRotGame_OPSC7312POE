@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.cronet.embedded)
+    implementation(libs.firebase.firestore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -67,6 +68,12 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
 
+    implementation(libs.retrofit)
+    implementation(libs.gsonConverter)
+    implementation(libs.kotlinCoroutines)
+
+    // Add your generative AI dependency
+    implementation ("com.google.ai.client.generativeai:generativeai:0.1.1")
 
 
 }

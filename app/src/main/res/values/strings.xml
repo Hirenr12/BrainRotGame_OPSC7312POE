@@ -21,6 +21,10 @@
     <string name="enter_new_username1">Enter new username</string>
     <string name="save_changes1">Save Changes</string>
     <string name="back_to_game_portal" />
+    <string name="game_hub_support">Game Hub Support</string>
+    <string name="how_can_we_help_you_with_our_games">How can we help you with our games?</string>
+    <string name="enter_your_question_here">Enter your question here</string>
+    <string name="get_help">Get Help</string>
 
     <string-array name="tier_array">
         <item>Fresh Meat</item>
