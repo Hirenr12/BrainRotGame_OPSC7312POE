@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountDetailsActivity">
+    tools:context=".CustomAccountDetails">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -22,75 +22,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="Enter new username"
+        android:hint="@string/enter_new_username"
+        android:padding="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintVertical_bias="0.067"
+        tools:ignore="TextFields" />
+
+    <!-- Tier Spinner -->
+    <Spinner
+        android:id="@+id/spinnerTier"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/tier_array"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUsername"
+        app:layout_constraintVertical_bias="0.083" />
+
     <!-- Tier Image -->
     <ImageView
         android:id="@+id/tierImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.126" />
-
-    <!-- Username -->
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/avatar"
         android:padding="16dp"
-        android:text="@string/username"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tierImageView"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerTier"
+        app:layout_constraintVertical_bias="0.142" />
 
-    <!-- Points -->
-    <TextView
-        android:id="@+id/tvPoints"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/points_0"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
-        app:layout_constraintVertical_bias="0.136" />
-
-    <!-- Tier -->
-    <TextView
-        android:id="@+id/tvTier"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/tier"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPoints"
-        app:layout_constraintVertical_bias="0.258" />
-
-    <!-- Customize Button -->
+    <!-- Save Button -->
     <Button
-        android:id="@+id/btnCustomize"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:padding="16dp"
-        android:text="@string/customize"
+        android:text="@string/save_changes"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTier" />
+        app:layout_constraintTop_toBottomOf="@id/tierImageView"
+        app:layout_constraintVertical_bias="0.211" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

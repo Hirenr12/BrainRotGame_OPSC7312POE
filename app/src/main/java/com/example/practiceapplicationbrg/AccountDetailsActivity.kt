@@ -1,6 +1,8 @@
 package com.example.practiceapplicationbrg
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ class AccountDetailsActivity : AppCompatActivity() {
     private lateinit var tvPoints: TextView
     private lateinit var tvTier: TextView
     private lateinit var tierImageView: ImageView
+    private lateinit var btnCustomize: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +28,17 @@ class AccountDetailsActivity : AppCompatActivity() {
         tvPoints = findViewById(R.id.tvPoints)
         tvTier = findViewById(R.id.tvTier)
         tierImageView = findViewById(R.id.tierImageView)
+        btnCustomize = findViewById(R.id.btnCustomize)
 
         // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+
+        // Set the button click listener to navigate to CustomAccountDetailsActivity
+        btnCustomize.setOnClickListener {
+            val intent = Intent(this, CustomAccountDetailsActivity::class.java)
+            startActivity(intent)
+        }
 
         val user = auth.currentUser
         user?.let {

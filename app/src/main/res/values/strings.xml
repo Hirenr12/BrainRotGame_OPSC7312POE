@@ -14,5 +14,21 @@
     <string name="tier">Tier:</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_content" />
+    <string name="enter_new_username">Enter new username</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="avatar">Avatar</string>
+    <string name="customize">Customize</string>
+
+    <string-array name="tier_array">
+        <item>Fresh Meat</item>
+        <item>Infected</item>
+        <item>Walker</item>
+        <item>Rotter</item>
+        <item>Revenant</item>
+        <item>Nightstalker</item>
+        <item>Necromancer</item>
+        <item>Warlord</item>
+        <item>Dreadlord</item>
+    </string-array>
 
 </resources>
