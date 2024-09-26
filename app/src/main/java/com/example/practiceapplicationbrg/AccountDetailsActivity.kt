@@ -3,6 +3,7 @@ package com.example.practiceapplicationbrg
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ class AccountDetailsActivity : AppCompatActivity() {
     private lateinit var tvTier: TextView
     private lateinit var tierImageView: ImageView
     private lateinit var btnCustomize: Button
+    private lateinit var btnBackToGamePortal: ImageButton
 
     // Tier mapping based on points
     private val tierPointsMap = mapOf(
@@ -42,6 +44,7 @@ class AccountDetailsActivity : AppCompatActivity() {
         tvTier = findViewById(R.id.tvTier)
         tierImageView = findViewById(R.id.tierImageView)
         btnCustomize = findViewById(R.id.btnCustomize)
+        btnBackToGamePortal = findViewById(R.id.btnBackToGamePortal)
 
         // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
@@ -53,6 +56,14 @@ class AccountDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Set the back button click listener to navigate back to GamePortal
+        btnBackToGamePortal.setOnClickListener {
+            val intent = Intent(this, GamePortal::class.java)
+            startActivity(intent)
+            finish() // Optionally finish the current activity so the user can't go back to it with the back button
+        }
+
+        // Fetch user data from Firestore
         val user = auth.currentUser
         user?.let {
             db.collection("users").document(it.uid).get()

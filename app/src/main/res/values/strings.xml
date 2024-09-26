@@ -20,6 +20,7 @@
     <string name="customize">Customize</string>
     <string name="enter_new_username1">Enter new username</string>
     <string name="save_changes1">Save Changes</string>
+    <string name="back_to_game_portal" />
 
     <string-array name="tier_array">
         <item>Fresh Meat</item>
