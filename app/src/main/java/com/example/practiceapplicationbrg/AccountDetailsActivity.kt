@@ -54,30 +54,33 @@ class AccountDetailsActivity : AppCompatActivity() {
                         tvPoints.text = "Points: $points"
                         tvTier.text = "Tier: $tier"
 
-                        // Update the Tier Image based on points
-                        updateTierImage(points)
+                        // Fetch the avatar image name (without extension)
+                        db.collection("users").document(it.uid)
+                            .collection("avatars").document("currentAvatar").get()
+                            .addOnSuccessListener { avatarDoc ->
+                                if (avatarDoc != null) {
+                                    val imageName = avatarDoc.getString("imageUrl")
+                                    if (!imageName.isNullOrEmpty()) {
+                                        // Remove the file extension (e.g., "fresh_meat.png" -> "fresh_meat")
+                                        val resourceName = imageName.substringBefore(".")
+                                        // Get the drawable resource ID by name
+                                        val imageResId = resources.getIdentifier(resourceName, "drawable", packageName)
+
+                                        if (imageResId != 0) {
+                                            // Set the drawable to the ImageView
+                                            tierImageView.setImageResource(imageResId)
+                                        }
+                                    }
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle failure of fetching avatar image name
+                            }
                     }
                 }
                 .addOnFailureListener { e ->
-                    // Handle failure
+                    // Handle failure of fetching user data
                 }
         }
-    }
-
-    private fun updateTierImage(points: Int) {
-        val tierImage = when {
-            points >= 900 -> R.drawable.dreadlord
-            points >= 800 -> R.drawable.warlord
-            points >= 700 -> R.drawable.necromancer
-            points >= 600 -> R.drawable.nightstalker
-            points >= 500 -> R.drawable.revenant
-            points >= 400 -> R.drawable.rotter
-            points >= 300 -> R.drawable.walker
-            points >= 200 -> R.drawable.infected
-            else -> R.drawable.fresh_meat
-        }
-
-        // Set the appropriate image
-        tierImageView.setImageResource(tierImage)
     }
 }

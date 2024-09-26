@@ -1,5 +1,6 @@
 package com.example.practiceapplicationbrg
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +16,36 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
     private lateinit var tierImageView: ImageView
     private lateinit var btnSave: Button
 
-    // Define tiers and their rankings
+    // Define tiers and their points requirements
     private val tierArray = arrayOf(
         "Fresh Meat", "Infected", "Walker", "Rotter", "Revenant",
         "Nightstalker", "Necromancer", "Warlord", "Dreadlord"
     )
+
+    private val tierPointsMap = mapOf(
+        "Fresh Meat" to 0,
+        "Infected" to 200,
+        "Walker" to 300,
+        "Rotter" to 400,
+        "Revenant" to 500,
+        "Nightstalker" to 600,
+        "Necromancer" to 700,
+        "Warlord" to 800,
+        "Dreadlord" to 900
+    )
+
+    private val avatarUrls = mapOf(
+        "Fresh Meat" to "fresh_meat.png",
+        "Infected" to "infected.png",
+        "Walker" to "walker.png",
+        "Rotter" to "rotter.png",
+        "Revenant" to "revenant.png",
+        "Nightstalker" to "nightstalker.png",
+        "Necromancer" to "necromancer.png",
+        "Warlord" to "warlord.png",
+        "Dreadlord" to "dreadlord.png"
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,20 +64,7 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
         // Load current user data
         val user = auth.currentUser
         user?.let {
-            db.collection("users").document(it.uid).get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        val currentUsername = document.getString("username")
-                        val currentTier = document.getString("tier")
-                        etUsername.setText(currentUsername)
-
-                        // Populate the Spinner with tiers up to the current tier
-                        populateSpinnerWithLimitedTiers(currentTier)
-
-                        // Set avatar image
-                        updateTierImage(currentTier ?: "Fresh Meat")
-                    }
-                }
+            loadUserData(it.uid)
         }
 
         // Set listener for Spinner to change image in real-time
@@ -67,27 +80,92 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
         // Save changes to Firestore on button click
         btnSave.setOnClickListener {
             val newUsername = etUsername.text.toString().trim()
-            val selectedTier = spinnerTier.selectedItem.toString()
 
+            // Update username if not empty
             if (newUsername.isNotEmpty()) {
-                saveChangesToFirestore(user!!.uid, newUsername, selectedTier)
+                saveChangesToFirestore(user!!.uid, newUsername)
             } else {
                 Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show()
             }
+
+            // Always save the avatar customization
+            val avatarUrl = getSelectedAvatarUrl()
+            saveAvatarToFirestore(user!!.uid, avatarUrl)
+
+            // Navigate to AccountDetailsActivity after saving changes
+            val intent = Intent(this, AccountDetailsActivity::class.java)
+            startActivity(intent)
+            finish() // Optionally close the current activity
         }
+
     }
 
-    private fun populateSpinnerWithLimitedTiers(currentTier: String?) {
-        // Get the index of the current tier
-        val currentTierIndex = tierArray.indexOf(currentTier)
+    private fun saveAvatarToFirestore(userId: String, avatarUrl: String) {
+        val avatarMap = mapOf("imageUrl" to avatarUrl)
 
-        // Limit the spinner options to tiers up to the current tier
-        val limitedTierArray = tierArray.sliceArray(0..currentTierIndex)
+        db.collection("users").document(userId).collection("avatars")
+            .document("currentAvatar")
+            .set(avatarMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Avatar updated successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to update avatar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 
-        // Set the adapter for the spinner with limited options
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, limitedTierArray)
+    private fun getSelectedAvatarUrl(): String {
+        val selectedTier = spinnerTier.selectedItem.toString()
+        return avatarUrls[selectedTier] ?: "" // Return an empty string if not found
+    }
+
+    private fun loadUserData(userId: String) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val currentUsername = document.getString("username")
+                    val points = document.getLong("points")?.toInt() ?: 0 // Get user's points
+                    etUsername.setText(currentUsername)
+
+                    // Populate the Spinner with tiers based on user's points
+                    populateSpinnerWithAllowedTiers(points)
+
+                    // Load the current avatar image
+                    loadAvatarImage(userId)
+                }
+            }
+    }
+
+    // Populate the spinner based on the user's points
+    private fun populateSpinnerWithAllowedTiers(points: Int) {
+        val allowedTiers = tierArray.filter { tier ->
+            val requiredPoints = tierPointsMap[tier] ?: 0
+            points >= requiredPoints
+        }
+
+        // Set the adapter for the spinner with the filtered tiers
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, allowedTiers)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTier.adapter = adapter
+    }
+
+    private fun loadAvatarImage(userId: String) {
+        db.collection("users").document(userId).collection("avatars")
+            .document("currentAvatar").get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val avatarUrl = document.getString("imageUrl")
+                    avatarUrl?.let { url ->
+                        // Load image using a custom method
+                        val imageResId = resources.getIdentifier(url.substringBefore("."),
+                            "drawable", packageName)
+                        tierImageView.setImageResource(imageResId)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to load avatar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun updateTierImage(tier: String) {
@@ -107,19 +185,21 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
         tierImageView.setImageResource(tierImageRes)
     }
 
-    private fun saveChangesToFirestore(userId: String, newUsername: String, newTier: String) {
-        val userMap = mapOf(
-            "username" to newUsername,
-            "tier" to newTier
-        )
+    private fun saveChangesToFirestore(userId: String, newUsername: String) {
+        val userMap = mutableMapOf<String, Any>()
+
+        // Update only if username is changed
+        if (newUsername.isNotEmpty()) {
+            userMap["username"] = newUsername
+        }
 
         db.collection("users").document(userId)
             .update(userMap)
             .addOnSuccessListener {
-                Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Username updated successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save changes: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to update username: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
