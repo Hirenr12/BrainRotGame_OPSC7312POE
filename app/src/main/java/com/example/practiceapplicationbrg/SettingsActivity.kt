@@ -44,7 +44,7 @@ class SettingsActivity : AppCompatActivity() {
 
         supportFeedbackButton.setOnClickListener {
             // Support and Feedback button click
-            val intent = Intent(this, SupportFeedbackActivity::class.java)
+            val intent = Intent(this, SupportFeatureActivity::class.java)
             startActivity(intent)
         }
     }
