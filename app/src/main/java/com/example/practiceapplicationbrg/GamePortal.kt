@@ -24,7 +24,8 @@ class GamePortal : AppCompatActivity() {
         Game("Tic Tac Toe", R.drawable.tic_tac_toe),
         Game("Hang Man", R.drawable.hang_man),
         Game("Flappy Bird", R.drawable.flappy_bird),
-        Game("???", R.drawable.mystery)
+        Game("???", R.drawable.mystery),
+        Game("Players Journal", R.drawable.journal)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,6 +127,11 @@ class GamePortal : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+            R.id.action_journal -> {
+                val intent = Intent(this, ActivityPlayersJournal::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_sign_out -> {
                 signOut()
                 true
@@ -143,11 +149,12 @@ class GamePortal : AppCompatActivity() {
     }
     private fun navigateToGameDetails(game: Game) {
         val intent = Intent(this, when (game.title) {
-            "Snake Eater" -> ActivityPlayersJournal::class.java
+//            "Snake Eater" -> FlappyBirdActivity::class.java
 //            "Tic Tac Toe" -> TicTacToeActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
 //            "Flappy Bird" -> FlappyBirdActivity::class.java
             "Super Mystery Game" -> ActivityPlayersJournal::class.java
+            "Players Journal"-> ActivityPlayersJournal::class.java
             else -> GamePortal::class.java
         })
         startActivity(intent)

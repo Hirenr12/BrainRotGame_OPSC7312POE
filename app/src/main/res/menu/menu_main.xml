@@ -38,7 +38,12 @@
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/white" />
-
+    <item
+        android:id="@+id/action_journal"
+        android:title="Players Journal"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
     <item
         android:id="@+id/action_sign_out"
         android:icon="@drawable/ic_sign_out"
@@ -47,10 +52,5 @@
         app:showAsAction="never"
         app:iconTint="@color/black" />
 
-    <item
-        android:id="@+id/action_tier"
-        android:title="Players Journal"
-        android:textColor="@color/black"
-        app:showAsAction="never"
-        app:iconTint="@color/black" />
+
 </menu>
