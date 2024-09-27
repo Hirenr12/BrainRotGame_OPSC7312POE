@@ -25,6 +25,10 @@
     <string name="how_can_we_help_you_with_our_games">How can we help you with our games?</string>
     <string name="enter_your_question_here">Enter your question here</string>
     <string name="get_help">Get Help</string>
+    <string name="move_up" />
+    <string name="move_down" />
+    <string name="move_left" />
+    <string name="move_right" />
 
     <string-array name="tier_array">
         <item>Fresh Meat</item>
