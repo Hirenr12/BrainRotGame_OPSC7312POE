@@ -26,6 +26,21 @@
             android:name=".SnakeGameActivity"
             android:exported="false" />
         <activity
+            android:name=".FloppyBird.FloppyBirdHelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_GameHub"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.PlayGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".PrivateLeaderboardActivity"
             android:exported="false" />
         <activity

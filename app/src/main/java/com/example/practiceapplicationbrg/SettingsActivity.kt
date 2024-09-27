@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -23,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         val accountDetailsButton = findViewById<Button>(R.id.button_account_details)
         val privacyPolicyButton = findViewById<Button>(R.id.button_privacy_policy)
         val notificationsButton = findViewById<Button>(R.id.button_notifications)
-        val supportFeedbackButton = findViewById<Button>(R.id.button_support_feedback)
+        val supportFeatureButton = findViewById<Button>(R.id.button_support_feature)
 
         accountDetailsButton.setOnClickListener {
             // Account Details button click
@@ -42,10 +43,12 @@ class SettingsActivity : AppCompatActivity() {
             checkAndHandleNotifications()
         }
 
-        supportFeedbackButton.setOnClickListener {
+        supportFeatureButton.setOnClickListener {
+            Log.d("REDIRECT", "Redirecting to page")
             // Support and Feedback button click
             val intent = Intent(this, SupportFeatureActivity::class.java)
             startActivity(intent)
+            Log.d("REDIRECT", "Fail in Redirecting to page")
         }
     }
 

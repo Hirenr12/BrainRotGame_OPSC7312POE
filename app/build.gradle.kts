@@ -79,6 +79,9 @@ dependencies {
     // Add your generative AI dependency
     implementation ("com.google.ai.client.generativeai:generativeai:0.1.1")
 
+    implementation ("androidx.cardview:cardview:1.0.0")
+
+
 
 }
 
