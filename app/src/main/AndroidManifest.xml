@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,6 +21,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticeApplicationBRG"
         tools:targetApi="31">
+        <activity
+            android:name=".FloppyBird.FloppyBirdHelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_GameHub"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.PlayGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FloppyBird.FloppyBird_MainActivity"
+            android:exported="false" />
         <activity
             android:name=".PrivateLeaderboardActivity"
             android:exported="false" />
@@ -55,7 +69,6 @@
         <activity
             android:name=".Register"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
