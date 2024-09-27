@@ -20,6 +20,14 @@ interface ApiService {
         @Body request: AddToPrivateLeaderboardRequest
     ): Response<Unit>
 
+
+    // Fetch private leaderboard for a specific game and user
+    @GET("leaderboard/private/{gameName}/{username}")
+    suspend fun getPrivateLeaderboard(
+        @Path("gameName") gameName: String,
+        @Path("username") username: String
+    ): List<LeaderboardEntry>
+
 }
 
 

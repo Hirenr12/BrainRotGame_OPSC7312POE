@@ -126,6 +126,11 @@ class GamePortal : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+            R.id.action_private_leader_board -> {
+                val intent = Intent(this, PrivateLeaderboardActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_sign_out -> {
                 signOut()
                 true
