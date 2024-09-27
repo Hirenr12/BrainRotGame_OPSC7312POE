@@ -23,7 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         val accountDetailsButton = findViewById<Button>(R.id.button_account_details)
         val privacyPolicyButton = findViewById<Button>(R.id.button_privacy_policy)
         val notificationsButton = findViewById<Button>(R.id.button_notifications)
-        val supportFeedbackButton = findViewById<Button>(R.id.button_support_feedback)
+        val supportFeatureButton = findViewById<Button>(R.id.button_support_feature)
 
         accountDetailsButton.setOnClickListener {
             // Account Details button click
@@ -42,7 +42,7 @@ class SettingsActivity : AppCompatActivity() {
             checkAndHandleNotifications()
         }
 
-        supportFeedbackButton.setOnClickListener {
+        supportFeatureButton.setOnClickListener {
             // Support and Feedback button click
             val intent = Intent(this, SupportFeatureActivity::class.java)
             startActivity(intent)
