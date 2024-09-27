@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/floppybird_background"
+    tools:context=".FloppyBird.FloppyBird_MainActivity">
+
+  <ImageButton
+      android:layout_width="70dp"
+      android:layout_height="70dp"
+      android:background="@drawable/floppybird_playbutton"
+      android:layout_centerInParent="true"
+      android:id="@+id/btnPlay"/>
+
+  <TextView
+      android:id="@+id/tvHighScore"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="48dp"
+      android:text="High Score"
+      android:textSize="18sp"
+      android:textColor="@android:color/white"
+      android:padding="8dp"
+      android:background="@android:color/black"/>
+
+  <TextView
+      android:id="@+id/tvBestTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tvHighScore"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:text="Best Time"
+      android:textSize="18sp"
+      android:textColor="@android:color/white"
+      android:padding="8dp"
+      android:background="@android:color/black"/>
+
+  <Button
+      android:id="@+id/btnClear"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginStart="149dp"
+      android:layout_marginBottom="100dp"
+      android:text="Clear Scores" />
+
+</RelativeLayout>
