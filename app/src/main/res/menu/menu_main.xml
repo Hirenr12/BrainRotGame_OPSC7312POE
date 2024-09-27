@@ -38,4 +38,11 @@
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/black" />
+
+    <item
+        android:id="@+id/action_tier"
+        android:title="Players Journal"
+        android:textColor="@color/black"
+        app:showAsAction="never"
+        app:iconTint="@color/black" />
 </menu>
