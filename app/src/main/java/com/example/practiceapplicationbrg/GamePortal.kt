@@ -20,7 +20,7 @@ class GamePortal : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private val games = mutableListOf(
-        Game("Snake Eater", R.drawable.snake_eater),
+        Game("RetroSnake", R.drawable.snake_eater),
         Game("Tic Tac Toe", R.drawable.tic_tac_toe),
         Game("Hang Man", R.drawable.hang_man),
         Game("Flappy Bird", R.drawable.flappy_bird),
@@ -149,11 +149,11 @@ class GamePortal : AppCompatActivity() {
     }
     private fun navigateToGameDetails(game: Game) {
         val intent = Intent(this, when (game.title) {
-//            "Snake Eater" -> FlappyBirdActivity::class.java
+            "RetroSnake" -> SnakeGameActivity::class.java
 //            "Tic Tac Toe" -> TicTacToeActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
 //            "Flappy Bird" -> FlappyBirdActivity::class.java
-            "Super Mystery Game" -> ActivityPlayersJournal::class.java
+//            "Super Mystery Game" -> ::class.java
             "Players Journal"-> ActivityPlayersJournal::class.java
             else -> GamePortal::class.java
         })
