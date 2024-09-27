@@ -38,4 +38,7 @@
         <item>Dreadlord</item>
     </string-array>
 
+    <!-- API Key stored here (not recommended for production apps) -->
+    <string name="generative_model_api_key">AIzaSyBBh_csSi8yQTFXX4AAVMTK7FbEZxqekzI</string>
+
 </resources>

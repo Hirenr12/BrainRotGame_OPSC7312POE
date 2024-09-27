@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -43,9 +44,11 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         supportFeatureButton.setOnClickListener {
+            Log.d("REDIRECT", "Redirecting to page")
             // Support and Feedback button click
             val intent = Intent(this, SupportFeatureActivity::class.java)
             startActivity(intent)
+            Log.d("REDIRECT", "Fail in Redirecting to page")
         }
     }
 
