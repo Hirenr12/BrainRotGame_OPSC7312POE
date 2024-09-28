@@ -24,6 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Tier Image -->
+
+    <!-- Username EditText -->
     <ImageView
         android:id="@+id/tierImageView"
         android:layout_width="300dp"
@@ -32,10 +34,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTier"
+        app:layout_constraintVertical_bias="0.222" />
 
-    <!-- Username EditText -->
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="0dp"
@@ -54,6 +55,23 @@
         app:layout_constraintVertical_bias="0.162" />
 
     <!-- Tier Spinner -->
+    <TextView
+        android:id="@+id/tvChoose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/gray_300"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/choose_avatar2"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUsername" />
+
     <Spinner
         android:id="@+id/spinnerTier"
         android:layout_width="0dp"
@@ -61,12 +79,11 @@
         android:background="@color/gray_300"
         android:entries="@array/tier_array"
         android:padding="16dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUsername"
+        app:layout_constraintTop_toBottomOf="@id/tvChoose"
         app:layout_constraintVertical_bias="0.035" />
 
 

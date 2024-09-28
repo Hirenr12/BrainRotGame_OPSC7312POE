@@ -58,5 +58,8 @@
     <string name="tiktaktoe_button_8">TikTakToe Button 8</string>
     <string name="tiktaktoe_button_9">TikTakToe Button 9</string>
     <string name="reset">Reset</string>
+    <string name="choose_avatar">Choose Avatar:</string>
+    <string name="choose_avatar1">Choose Avatar</string>
+    <string name="choose_avatar2">Choose Avatar:</string>
 
 </resources>
