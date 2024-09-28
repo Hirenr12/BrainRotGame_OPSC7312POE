@@ -1,5 +1,6 @@
 package com.example.practiceapplicationbrg
 
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -28,6 +29,11 @@ interface ApiService {
         @Path("username") username: String
     ): List<LeaderboardEntry>
 
+
+    @POST("scores/scoress")
+    suspend fun submitScore(@Body submitScoreRequest: SubmitScoreRequest): Response<Unit>
+
+
 }
 
 
@@ -36,4 +42,11 @@ data class AddToPrivateLeaderboardRequest(
     val gameName: String,
     val currentUser: String,
     val selectedUser: String
+)
+
+// Request body for submitting a score
+data class SubmitScoreRequest(
+    val gameName: String,
+    val username: String,
+    val score: Int
 )

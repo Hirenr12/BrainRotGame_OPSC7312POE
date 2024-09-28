@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.practiceapplicationbrg.FloppyBird.FloppyBird_GameHub
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -152,7 +153,7 @@ class GamePortal : AppCompatActivity() {
 //            "Snake Eater" -> FlappyBirdActivity::class.java
 //            "Tic Tac Toe" -> TicTacToeActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
-//            "Flappy Bird" -> FlappyBirdActivity::class.java
+            "Flappy Bird" -> FloppyBird_GameHub::class.java
             "Super Mystery Game" -> ActivityPlayersJournal::class.java
             "Players Journal"-> ActivityPlayersJournal::class.java
             else -> GamePortal::class.java
