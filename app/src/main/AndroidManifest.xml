@@ -59,6 +59,9 @@
             android:name=".PrivacyPolicyActivity"
             android:exported="false" />
         <activity
+            android:name=".CommunityActivity"
+            android:exported="false" />
+        <activity
             android:name=".AccountDetailsActivity"
             android:exported="false" />
         <activity

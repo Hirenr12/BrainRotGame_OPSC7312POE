@@ -25,6 +25,13 @@ class SettingsActivity : AppCompatActivity() {
         val privacyPolicyButton = findViewById<Button>(R.id.button_privacy_policy)
         val notificationsButton = findViewById<Button>(R.id.button_notifications)
         val supportFeatureButton = findViewById<Button>(R.id.button_support_feature)
+      val communityButton = findViewById<Button>(R.id.button_community_activity)
+
+        communityButton.setOnClickListener {
+            // Account Details button click
+            val intent = Intent(this, CommunityActivity::class.java)
+            startActivity(intent)
+        }
 
         accountDetailsButton.setOnClickListener {
             // Account Details button click
@@ -50,6 +57,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
             Log.d("REDIRECT", "Fail in Redirecting to page")
         }
+
     }
 
 
