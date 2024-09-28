@@ -91,11 +91,6 @@ class CustomAccountDetailsActivity : AppCompatActivity() {
             // Always save the avatar customization
             val avatarUrl = getSelectedAvatarUrl()
             saveAvatarToFirestore(user!!.uid, avatarUrl)
-
-            // Navigate to AccountDetailsActivity after saving changes
-            val intent = Intent(this, AccountDetailsActivity::class.java)
-            startActivity(intent)
-            finish() // Optionally close the current activity
         }
 
     }

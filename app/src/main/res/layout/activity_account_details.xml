@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_600"
     tools:context=".AccountDetailsActivity">
 
     <TextView
@@ -22,35 +23,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Back Button (ImageButton to navigate to GamePortal) -->
-
     <!-- Tier Image -->
-
-    <ImageButton
-        android:id="@+id/btnBackToGamePortal"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:adjustViewBounds="false"
-        android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
-        app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
-
     <ImageView
         android:id="@+id/tierImageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.126"
+        app:layout_constraintVertical_bias="0.054"
         tools:ignore="ContentDescription" />
 
     <!-- Username -->
@@ -58,24 +41,32 @@
         android:id="@+id/tvUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray_300"
+        android:gravity="center"
         android:padding="16dp"
         android:text="@string/username"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tierImageView"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintVertical_bias="0.089" />
 
     <!-- Points -->
     <TextView
         android:id="@+id/tvPoints"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray_300"
+        android:gravity="center"
         android:padding="16dp"
+        android:textColor="@color/black"
         android:text="@string/points_0"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -88,9 +79,13 @@
         android:id="@+id/tvTier"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray_300"
+        android:gravity="center"
         android:padding="16dp"
+        android:textColor="@color/black"
         android:text="@string/tier"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -104,12 +99,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/green_800"
         android:padding="16dp"
         android:text="@string/customize"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTier" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

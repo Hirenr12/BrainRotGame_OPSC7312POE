@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomAccountDetails">
+    android:background="@color/gray_600"
+    tools:context=".CustomAccountDetailsActivity">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -23,9 +24,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Tier Image -->
-
-    <!-- Username EditText -->
-
     <ImageView
         android:id="@+id/tierImageView"
         android:layout_width="300dp"
@@ -37,13 +35,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:layout_constraintVertical_bias="0.55" />
 
+    <!-- Username EditText -->
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray_300"
         android:hint="@string/enter_new_username1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:padding="16dp"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,8 +58,10 @@
         android:id="@+id/spinnerTier"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray_300"
         android:entries="@array/tier_array"
         android:padding="16dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,13 +69,19 @@
         app:layout_constraintTop_toBottomOf="@id/etUsername"
         app:layout_constraintVertical_bias="0.035" />
 
+
     <!-- Save Button -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/green_800"
         android:padding="16dp"
         android:text="@string/save_changes1"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
