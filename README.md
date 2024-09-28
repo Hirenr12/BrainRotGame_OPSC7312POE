@@ -10,6 +10,7 @@
 - [Overview](#overview)
 - [YouTube Link](#youtube-link)
 - [Features](#features)
+- [Games](#games)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
@@ -24,11 +25,47 @@
 
 ## Features
 
-### Access Control:
-- 
+### Homepage:
+-
 
-### Common Features:
-- 
+### Registration:
+-
+
+### Login:
+-
+
+### GamePortal:
+-
+
+### Favorites:
+-
+
+### Mystery Game:
+-
+
+### Players Journal:
+-
+
+
+### Player Profile:
+-
+
+### Player Profile Customization:
+-
+
+### LeaderBoard:
+-
+
+### Personalised LeaderBoard
+-
+
+### Support and Feedback
+-
+
+### Settings
+-
+
+### Games
 
 ### User Interface:
 - **User-Friendly Interface**: 
