@@ -65,10 +65,8 @@
 ### Settings
 -
 
-### Games
 
-### User Interface:
-- **User-Friendly Interface**: 
+## Games
 
 ## Prerequisites
 
