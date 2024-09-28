@@ -7,4 +7,144 @@
     android:layout_height="match_parent"
     tools:context=".TikTakToeGameActivity">
 
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2E7D32"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/tictactoe"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Grid Layout for Tic-Tac-Toe Board with visible grid lines -->
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:columnCount="3"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintVertical_bias="0.069">
+
+        <!-- ImageButtons for Tic-Tac-Toe Cells with grid lines -->
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_1"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_2"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_3"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_4"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_5"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button6"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_6"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button7"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_7"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_8"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/button9"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/grid_background"
+            android:contentDescription="@string/tiktaktoe_button_9"
+            android:scaleType="centerInside" />
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_300"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:text="Player X's turn"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridLayout"
+        app:layout_constraintVertical_bias="0.258" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#2E7D32"
+        android:onClick="onResetClick"
+        android:padding="16dp"
+        android:text="@string/reset"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

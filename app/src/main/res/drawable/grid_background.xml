@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Set a solid white background -->
+    <solid android:color="#FFFFFF" />
+
+    <!-- Create borders with 2dp thickness and black color -->
+    <stroke
+        android:width="5dp"
+        android:color="#000000" />
+
+    <!-- Add some padding inside the buttons -->
+    <padding
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp" />
+</shape>
