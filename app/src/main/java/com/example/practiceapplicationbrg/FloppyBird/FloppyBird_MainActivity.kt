@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.practiceapplicationbrg.ApiService
+import com.example.practiceapplicationbrg.PointsManager
 import com.example.practiceapplicationbrg.R
 import com.example.practiceapplicationbrg.SubmitScoreRequest
 import com.google.firebase.FirebaseApp
@@ -74,6 +75,9 @@ class FloppyBird_MainActivity : AppCompatActivity() {
             if (score > 0) {
                 updateHighScore(score)  // Update high score
                 submitScore(score)      // Submit the score here
+
+                updatePoints(score) // Update points
+
             }
         }
 
@@ -241,4 +245,29 @@ class FloppyBird_MainActivity : AppCompatActivity() {
 
         apiService = retrofit.create(ApiService::class.java)
     }
+
+
+
+
+
+
+
+
+
+    private fun updatePoints(score: Int) {
+        if (score > 0) {
+            // Ensure that UI updates like Toast happen on the main thread
+            runOnUiThread {
+                // Show the toast with the correct score
+                Toast.makeText(this, "You Got: $score Points!", Toast.LENGTH_SHORT).show()
+            }
+
+            // Update with accumulated score in Firebase
+            PointsManager.updateUserPoints(db, auth, score, this@FloppyBird_MainActivity)
+        }
+    }
+
+
+
+
 }
