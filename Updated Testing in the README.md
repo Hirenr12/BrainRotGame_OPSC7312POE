@@ -11,7 +11,7 @@
 - [YouTube Link](#youtube-link)
 - [Features](#features)
 - [Games](#games)
-- [Prerequisites](#prerequisites)
+- [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Testing](#testing)
@@ -68,12 +68,7 @@
 
 ## Games
 
-## Prerequisites
 
-Before you begin, ensure that you have the following requirements:
-
-- **Android Studio**:
-- 
 ## Getting Started
 
 To get started with BrainRotGames, follow these steps:
@@ -143,6 +138,24 @@ We thank the following contributors for their valuable input to this project:
 - [Nehal Singh ST10184628](https://github.com/st10184628)
   
 ## License
+
+This project is licensed under the **MIT License**. 
+
+### Third-Party Services and Resources
+
+This project uses various third-party services and resources, each of which may have its own licensing terms. Please review the following licenses for each service or resource utilized:
+
+- **Android Studio**: Android Studio is an IDE developed by Google and is subject to the [Android Software Development Kit (SDK) License Agreement](https://developer.android.com/studio/terms).
+  
+- **CircleCI**: CircleCI is a continuous integration and delivery platform. You can review its [Terms of Service](https://circleci.com/terms-of-service) and its [Privacy Policy](https://circleci.com/privacy).
+  
+- **SonarQube**: SonarQube is used for continuous code quality and security inspection. SonarQube is available under the [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
+
+- **Google Services** (including Firebase Authentication, Firestore DB, and Google Sign-In):
+  - Firebase Authentication and Firestore DB are part of Google Firebase and are subject to the [Firebase Terms of Service](https://firebase.google.com/terms) and the [Google Cloud Platform Terms of Service](https://cloud.google.com/terms).
+  - Google Sign-In is subject to the [Google API Terms of Service](https://developers.google.com/terms).
+
+Please ensure compliance with the respective licenses of these third-party services when using, modifying, or distributing this project.
 
 ## Acknowledgments
 
