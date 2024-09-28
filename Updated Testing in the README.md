@@ -82,9 +82,34 @@ To get started with BrainRotGames, follow these steps:
   
 
 
+
+## Prerequisites For Developer Usage
+
+Before you begin, ensure that you have the following requirements:
+
+- **Android Studio**: Make sure you have the latest version of Android Studio installed. You can download it from the [official website](https://developer.android.com/studio). Android Studio is required to build and run the application on your local environment.
   
+- **Java Development Kit (JDK)**: Ensure you have JDK 17 installed, as it's the version used in this project. You can download it from [AdoptOpenJDK](https://adoptopenjdk.net/) or [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html).
+
+- **Firebase Account**: You need to set up a Firebase project to enable Firebase Authentication, Firestore, and Google Sign-In. You can create a Firebase project at the [Firebase Console](https://console.firebase.google.com/).
+
+- **Google Services Configuration**: Add the `google-services.json` file to your Android project, which you can download from your Firebase console once you've set up Firebase Authentication and Firestore DB.
+
+- **CircleCI Account**: Set up a CircleCI account and connect it to your GitHub repository for continuous integration. Visit the [CircleCI website](https://circleci.com) for more details.
+
+- **SonarQube Setup**: Install and configure SonarQube for code quality checks. You can either use the [SonarQube cloud service](https://sonarcloud.io) or set it up locally.
+
+- **Git**: Ensure that you have Git installed to clone the repository and manage version control. Download it from [Git SCM](https://git-scm.com/).
+
+- **Gradle**: Make sure Gradle is installed and configured on your system. You can follow the instructions on the [official Gradle website](https://gradle.org/install/).
+
+Once these prerequisites are set up, you should be ready to clone the project and start working with the code.
+
+
    
 ## Usage
+
+
 
 
 ## Testing
@@ -129,6 +154,10 @@ The project is integrated with SonarQube to measure code quality, coverage, and 
 After passing all tests, the APKs and AAB (App Bundle) files are generated and uploaded as artifacts for further manual testing. You can find the generated APKs and AAB files in the GitHub Actions artifacts section after the build is complete. This allows for easy access to build outputs for deployment or additional testing processes.
 
 In summary, integrating SonarQube into our workflow not only enhances code quality but also ensures that we maintain high standards throughout our development process. The use of artifacts facilitates efficient testing and deployment practices within our CI/CD pipeline.
+
+
+
+
 ## Contributing
 We thank the following contributors for their valuable input to this project:
 
@@ -136,6 +165,9 @@ We thank the following contributors for their valuable input to this project:
 - [Ethan Swanepoel ST10198049](https://github.com/Ethan-Swanepoel)
 - [Ameer Inder Kajee ST10063110](https://github.com/AI-Kajee)
 - [Nehal Singh ST10184628](https://github.com/st10184628)
+
+
+
   
 ## License
 
