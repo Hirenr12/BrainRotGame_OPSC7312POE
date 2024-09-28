@@ -114,8 +114,8 @@ The pipeline is configured in `.github/workflows/build.yml` and includes the fol
   
 - **Build Project**: Builds the project using `./gradlew build` after successful testing.
 
-****3. Test Workflow ****
 
+****2. Test Workflow and Github Actions****
 ```yaml
 
 The YML can be found under actions in the repository
