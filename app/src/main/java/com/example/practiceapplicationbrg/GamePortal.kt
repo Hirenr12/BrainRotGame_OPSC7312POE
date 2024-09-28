@@ -150,7 +150,7 @@ class GamePortal : AppCompatActivity() {
     }
     private fun navigateToGameDetails(game: Game) {
         val intent = Intent(this, when (game.title) {
-//            "Snake Eater" -> FlappyBirdActivity::class.java
+            "RetroSnake" -> SnakeGameActivity::class.java
 //            "Tic Tac Toe" -> TicTacToeActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
             "Flappy Bird" -> FloppyBird_GameHub::class.java
