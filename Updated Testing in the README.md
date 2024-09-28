@@ -123,13 +123,13 @@ BrainRotGame_OPSC7312POE\.github\workflows\generate-apk-aab-debug-release.yml
 
 ```
 
-## Code Quality and Coverage
+### Code Quality and Coverage
 
 The project is integrated with SonarQube to measure code quality, coverage, and potential duplications. This integration helps ensure that the code adheres to best practices and maintains high-quality standards.
 
 - **SonarQube Report**: After each build, a SonarQube analysis is triggered to ensure that the code meets our quality gate. This process involves evaluating various metrics such as code coverage, the presence of bugs, and potential security vulnerabilities. If any of these metrics fall below acceptable thresholds, the quality gate will prevent the code from progressing through the CI/CD pipeline.
 
-## Artifacts
+### Artifacts
 
 After passing all tests, the APKs and AAB (App Bundle) files are generated and uploaded as artifacts for further manual testing. You can find the generated APKs and AAB files in the GitHub Actions artifacts section after the build is complete. This allows for easy access to build outputs for deployment or additional testing processes.
 
