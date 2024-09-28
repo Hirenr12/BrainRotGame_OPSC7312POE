@@ -30,7 +30,7 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
 
         // Initialize Retrofit for API calls
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000/") // Ensure this points to your local server
+            .baseUrl("https://brainrotapi.ue.r.appspot.com/") // Ensure this points to your local server
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
