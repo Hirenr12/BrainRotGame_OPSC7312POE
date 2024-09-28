@@ -44,5 +44,8 @@
 
     <!-- API Key stored here (not recommended for production apps) -->
     <string name="generative_model_api_key">AIzaSyBBh_csSi8yQTFXX4AAVMTK7FbEZxqekzI</string>
+    <string name="tiktaktoe">TikTakToe</string>
+    <string name="tik_tak_toe_description">Tic-Tac-Toe is a classic two-player game played on a 3x3 grid. Players take turns marking a square on the grid with either an \'X\' or an \'O.\' The goal is to be the first to get three of your marks in a row, either horizontally, vertically, or diagonally. The game is simple, quick, and often ends in a draw if both players play optimally.</string>
+    <string name="play">Play</string>
 
 </resources>
