@@ -24,8 +24,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Tier Image -->
-
-    <!-- Username EditText -->
     <ImageView
         android:id="@+id/tierImageView"
         android:layout_width="300dp"
@@ -37,6 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerTier"
         app:layout_constraintVertical_bias="0.222" />
 
+    <!-- Username EditText -->
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="0dp"
@@ -54,7 +53,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.162" />
 
-    <!-- Tier Spinner -->
     <TextView
         android:id="@+id/tvChoose"
         android:layout_width="0dp"
