@@ -30,7 +30,7 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
 
         // Initialize Retrofit for API calls
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://brainrotapi.ue.r.appspot.com/") // Ensure this points to your local server
+            .baseUrl("https://brainrotapi.ue.r.appspot.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -59,11 +59,18 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
         }
     }
 
+
     private fun loadGameNames() {
         lifecycleScope.launch {
             try {
-                val games = apiService.getAllGames()
-                Log.d("PrivateLeaderboard", "Games loaded: $games")
+                // Fetch current user username from Firestore
+                currentUserUsername = fetchCurrentUserUsername() ?: currentUserUsername // Use the fetched username or keep default
+                Log.d("PrivateLeaderboard", "Fetched current user username: $currentUserUsername")
+
+                // Fetch all private games for the current user
+                val games = apiService.getAllPrivateGames(currentUserUsername)
+                Log.d("PrivateLeaderboard", "Private games loaded: $games")
+
                 val adapter = ArrayAdapter(
                     this@PrivateLeaderboardActivity,
                     android.R.layout.simple_dropdown_item_1line,
@@ -89,6 +96,8 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
     private fun loadPrivateLeaderboardForGame(gameName: String) {
         lifecycleScope.launch {

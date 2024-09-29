@@ -14,7 +14,7 @@ interface ApiService {
     @GET("leaderboard/global/{gameName}")
     suspend fun getLeaderboard(@Path("gameName") gameName: String): List<LeaderboardEntry>
 
-    // Updated API to add a user to the Private Leaderboard
+    // Add a user to the Private Leaderboard
     @POST("leaderboard/private/{gameName}/{currentUser}/{selectedUser}")
     suspend fun addToPrivateLeaderboard(
         @Path("gameName") gameName: String,
@@ -29,6 +29,10 @@ interface ApiService {
         @Path("username") username: String
     ): List<LeaderboardEntry>
 
+
+    // Method to fetch all private games for a specific user
+    @GET("leaderboard/private/privateGames/{username}")
+    suspend fun getAllPrivateGames(@Path("username") username: String): List<String>
 
     @POST("scores/scoress")
     suspend fun submitScore(@Body submitScoreRequest: SubmitScoreRequest): Response<Unit>
