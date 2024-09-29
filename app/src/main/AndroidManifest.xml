@@ -32,6 +32,9 @@
             android:name=".SnakeGameActivity"
             android:exported="false" />
         <activity
+            android:name=".ColorMatchGame"
+            android:exported="false" />
+        <activity
             android:name=".FloppyBird.FloppyBirdHelpActivity"
             android:exported="false" />
         <activity
