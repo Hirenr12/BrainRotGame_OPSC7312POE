@@ -3,112 +3,126 @@ package com.example.practiceapplicationbrg
 import PrivacyPolicy
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class PrivacyPolicyActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_privacy_policy)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Create an instance of PrivacyPolicy with the policy text
+        // Create a PrivacyPolicy object with your policy text
         val privacyPolicy = PrivacyPolicy(
-            effectiveDate = "Effective Date: 21/08/2024",
-            introduction = "Welcome to BrainRotGames (\"we,\" \"our,\" or \"us\"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (\"App\"). Please read this policy carefully. If you do not agree with the terms of this Privacy Policy, please do not use the App.",
+            effectiveDate = "Effective Date: September 29, 2024",
+
+            introduction = """
+        We are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, share, 
+        and protect your personal information when you use our mobile applications, including our games, 
+        community pages, and feedback tools, as well as the Gemini AI feature. Please read this policy carefully 
+        to understand our views and practices regarding your personal data and how we will treat it.
+    """.trimIndent(),
+
             informationWeCollect = """
-                1. Information We Collect
-                a. Personal Information
-                We may collect personal information that you voluntarily provide to us, such as:
-                - Name
-                - Email address
-                - Username
-                - Profile picture
-                - Payment information (if applicable)
-                b. Non-Personal Information
-                We may collect non-personal information about you whenever you interact with our App. Non-personal information may include your device type, operating system, browser type, and usage data.
-                c. Location Information
-                With your consent, we may collect information about your location to provide location-based services.
-            """.trimIndent(),
+        We collect personal information that you voluntarily provide to us when you register for an account, 
+        submit feedback, participate in the community, or play our games. This information includes, but is not limited to:
+        - Your name
+        - Email address
+        - Username
+        - Dates and times of interaction with the app (e.g., when you sign in, submit feedback)
+        
+        In addition to this, the app collects certain technical data automatically, such as:
+        - Device information (e.g., model, operating system)
+        - IP address
+        - Usage data, including in-game activity
+    """.trimIndent(),
+
             howWeUseInformation = """
-                2. How We Use Your Information
-                We may use the information we collect for various purposes, including:
-                - To provide, maintain, and improve our App
-                - To manage your account
-                - To process transactions and send related information
-                - To communicate with you, including sending updates and promotional materials
-                - To personalize your experience with the App
-                - To monitor and analyze usage and trends to improve the App
-                - To detect, prevent, and address technical issues or security breaches
-            """.trimIndent(),
+        The personal information we collect is used to enhance your experience with our app and services. Specifically, we use your information to:
+        - Create and manage your account
+        - Provide access to our games and community features
+        - Improve the functionality and performance of the app
+        - Collect feedback to refine and improve our services
+        - Send you notifications, updates, or promotional materials, if you opt-in to receive them
+        
+        Please note that while the app includes a Gemini AI feature, any conversations with the AI are not logged or stored by us. 
+        However, the community and feedback pages do log user submissions, and we use that information to improve our services.
+    """.trimIndent(),
+
             howWeShareInformation = """
-                3. How We Share Your Information
-                We do not sell, trade, or rent your personal information to others. We may share information with third parties in the following circumstances:
-                - Service Providers: We may share information with third-party service providers who perform services on our behalf, such as payment processing or data analysis.
-                - Legal Requirements: We may disclose your information if required to do so by law or in response to valid requests by public authorities.
-                - Business Transfers: If we are involved in a merger, acquisition, or asset sale, your information may be transferred as part of that transaction.
-            """.trimIndent(),
+        We do not sell, trade, or otherwise transfer your personal information to outside parties, except in the following cases:
+        - To comply with legal obligations or respond to valid legal requests, such as a court order or government inquiry
+        - To protect the rights, property, or safety of our company, our users, or others
+        - To our trusted service providers who assist us in operating our app and services, as long as they agree to keep your information confidential
+        
+        All third-party providers with access to your data are required to take reasonable steps to ensure the privacy and security of your information.
+    """.trimIndent(),
+
             dataSecurity = """
-                4. Data Security
-                We implement reasonable security measures to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or method of electronic storage is 100% secure.
-            """.trimIndent(),
+        We take the security of your personal data seriously. We implement a variety of security measures, such as encryption and secure storage, to protect your personal information against unauthorized access, alteration, disclosure, or destruction. 
+        However, please understand that no security system is impenetrable, and we cannot guarantee the complete security of your data. 
+        You are responsible for keeping your account credentials secure and not sharing them with others.
+    """.trimIndent(),
+
             yourChoices = """
-                5. Your Choices
-                a. Account Information
-                You may update, correct, or delete your account information at any time by accessing your account settings within the App.
-                b. Marketing Communications
-                You may opt out of receiving promotional communications from us by following the unsubscribe instructions provided in those communications.
-                c. Location Information
-                You can stop the collection of location information by changing the settings on your mobile device.
-            """.trimIndent(),
+        You have several choices regarding the collection and use of your data:
+        - You can review, update, or delete your account information at any time by accessing the settings in the app.
+        - You can choose not to provide certain information, but this may limit your ability to use certain features of the app (e.g., community and feedback sections).
+        - You may opt out of receiving promotional communications by following the unsubscribe instructions in the emails or updating your preferences in the app.
+        - You can request to have your data deleted by contacting our support team at support@example.com.
+    """.trimIndent(),
+
             childrensPrivacy = """
-                6. Children’s Privacy
-                Our App is not intended for children under the age of 13, and we do not knowingly collect personal information from children under 13. If we become aware that we have inadvertently collected personal information from a child under 13, we will delete such information promptly.
-            """.trimIndent(),
+        Our app is not intended for children under the age of 13, and we do not knowingly collect personal information from children under 13. 
+        If we become aware that we have inadvertently collected personal information from a child under 13, we will take steps to delete that information from our records as soon as possible.
+        If you are a parent or guardian and believe that your child has provided us with personal information without your consent, please contact us at support@example.com, and we will take appropriate action.
+    """.trimIndent(),
+
             changesToPolicy = """
-                7. Changes to This Privacy Policy
-                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.
-            """.trimIndent(),
+        We reserve the right to modify this Privacy Policy at any time. Any changes will be effective immediately upon posting the updated policy on this page, and we will notify you via email or in-app notifications if there are significant changes. 
+        We encourage you to review this policy periodically for the latest information on our privacy practices.
+    """.trimIndent(),
+
             contactUs = """
-                8. Contact Us
-                If you have any questions about this Privacy Policy, please contact us at:
-                - Email: [Insert Contact Email]
-                - Address: [Insert Physical Address]
-            """.trimIndent()
+        If you have any questions or concerns about this Privacy Policy, or if you would like to make a request regarding your personal data, 
+        please contact us at:
+        
+        Email: superman@gmail.com
+        Address: 123 Privacy St., Data City, DS 12345
+    """.trimIndent()
         )
 
-        // Get the TextView and populate it with the policy text
-        val privacyTextView: TextView = findViewById(R.id.tvPrivacyPolicyContent)
-        val fullPolicyText = """
+        // Set the privacy policy content in the TextView
+        val privacyPolicyTextView: TextView = findViewById(R.id.tvPrivacyPolicyContent)
+        val policyText = """
             ${privacyPolicy.effectiveDate}
-            
+
             ${privacyPolicy.introduction}
-            
+
+            Information We Collect:
             ${privacyPolicy.informationWeCollect}
-            
+
+            How We Use Information:
             ${privacyPolicy.howWeUseInformation}
-            
+
+            How We Share Information:
             ${privacyPolicy.howWeShareInformation}
-            
+
+            Data Security:
             ${privacyPolicy.dataSecurity}
-            
+
+            Your Choices:
             ${privacyPolicy.yourChoices}
-            
+
+            Children's Privacy:
             ${privacyPolicy.childrensPrivacy}
-            
+
+            Changes to This Policy:
             ${privacyPolicy.changesToPolicy}
-            
+
+            Contact Us:
             ${privacyPolicy.contactUs}
         """.trimIndent()
 
-        privacyTextView.text = fullPolicyText
+        privacyPolicyTextView.text = policyText
     }
 }

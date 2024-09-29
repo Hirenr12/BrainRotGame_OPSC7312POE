@@ -2,11 +2,16 @@ package com.example.practiceapplicationbrg
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import kotlin.random.Random
 
 class ColorMatchGame : AppCompatActivity() {
@@ -16,13 +21,15 @@ class ColorMatchGame : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
 
+
+
     private var score = 0
     private var timeLeft = 10 // Game duration in seconds
     private val colors = listOf("RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE")
 
     private var gameJob: Job? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_color_match)
 
@@ -128,11 +135,16 @@ class ColorMatchGame : AppCompatActivity() {
             trueButton.isEnabled = false
             falseButton.isEnabled = false
             colorDisplay.text = "Game Over!"
+
+
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         gameJob?.cancel()
     }
+
+
+
+
 }
