@@ -128,6 +128,11 @@ class GamePortal : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+            R.id.action_private_leader_board -> {
+                val intent = Intent(this, PrivateLeaderboardActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_journal -> {
                 val intent = Intent(this, ActivityPlayersJournal::class.java)
                 startActivity(intent)
@@ -151,7 +156,7 @@ class GamePortal : AppCompatActivity() {
     private fun navigateToGameDetails(game: Game) {
         val intent = Intent(this, when (game.title) {
             "RetroSnake" -> SnakeGameActivity::class.java
-//            "Tic Tac Toe" -> TicTacToeActivity::class.java
+            "Tic Tac Toe" -> TikTakToeGameActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
             "Flappy Bird" -> FloppyBird_GameHub::class.java
 //            "Super Mystery Game" -> RetroTetris::class.java

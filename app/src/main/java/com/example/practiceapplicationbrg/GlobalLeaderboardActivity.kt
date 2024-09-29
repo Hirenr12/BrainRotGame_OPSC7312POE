@@ -113,7 +113,7 @@ class GlobalLeaderboardActivity : AppCompatActivity() {
 
     private fun setupRetrofit() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000/")
+            .baseUrl("https://brainrotapi.ue.r.appspot.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
