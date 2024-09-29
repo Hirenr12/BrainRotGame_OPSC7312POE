@@ -1,30 +1,44 @@
 package com.example.practiceapplicationbrg
 
-import android.content.Context // Import added here
+// SnakeGameActivity.kt
+
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.content.pm.ActivityInfo
-import kotlinx.coroutines.*
-import kotlin.math.abs
+import com.example.practiceapplicationbrg.ApiService
+import com.example.practiceapplicationbrg.SubmitScoreRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import android.widget.Toast
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.abs
 
 class SnakeGameActivity : AppCompatActivity() {
+
     private lateinit var canvas: CanvasView
     private lateinit var buttonUp: View
     private lateinit var buttonDown: View
     private lateinit var buttonLeft: View
     private lateinit var buttonRight: View
-    private lateinit var firestore: FirebaseFirestore
+    private lateinit var tvHighScore: TextView
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var apiService: ApiService
     private lateinit var auth: FirebaseAuth
-    private var score: Int = 0 // Accumulated score
+    private lateinit var db: FirebaseFirestore
+    private var score: Int = 0
+    private var currentUserUsername: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +46,7 @@ class SnakeGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_snake_game)
 
         // Initialize Firebase
-        firestore = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
         // Initialize buttons
@@ -41,9 +55,15 @@ class SnakeGameActivity : AppCompatActivity() {
         buttonLeft = findViewById(R.id.button_left)
         buttonRight = findViewById(R.id.button_right)
 
+        // Initialize high score text view
+        tvHighScore = findViewById(R.id.tvHighScore)
+
+        // Initialize shared preferences
+        sharedPreferences = getSharedPreferences("SnakeGame", MODE_PRIVATE)
+
         // Set full-screen and portrait mode
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         supportActionBar?.hide()
 
         // Touch control
@@ -95,7 +115,7 @@ class SnakeGameActivity : AppCompatActivity() {
                     }
                     if (!Snake.possibleMove()) {
                         Snake.alive = false
-                        updatePoints() // Update points when the game ends
+                        updatePoints()
                         Snake.reset()
                     }
 
@@ -104,7 +124,7 @@ class SnakeGameActivity : AppCompatActivity() {
                     // Check for food consumption
                     if (Snake.headX == Food.posX && Snake.headY == Food.posY) {
                         Food.generate()
-                        score += 10 // Accumulate points locally
+                        score += 10
                     } else {
                         Snake.bodyParts.removeAt(0)
                     }
@@ -136,25 +156,133 @@ class SnakeGameActivity : AppCompatActivity() {
             if (Snake.direction != "left")
                 Snake.direction = "right"
         }
+
+        setupRetrofit()
+        fetchCurrentUserUsername {
+            displayHighScore()
+        }
     }
+
+    private fun displayHighScore() {
+        val highScore = sharedPreferences.getInt("high_score", 0)
+        tvHighScore.text = "High Score: $highScore"
+    }
+
+    private fun updateHighScore(score: Int) {
+        val highScore = sharedPreferences.getInt("high_score", 0)
+        if (score > highScore) {
+            with(sharedPreferences.edit()) {
+                putInt("high_score", score)
+                apply()
+            }
+            displayHighScore()
+        }
+    }
+
     private fun updatePoints() {
         if (score > 0) {
-            // Ensure that UI updates like Toast happen on the main thread
             runOnUiThread {
-                // Show the toast with the correct score before resetting it
                 Toast.makeText(this, "Game Over! Your score: $score", Toast.LENGTH_SHORT).show()
-
-                // Update with accumulated score in Firebase first
-                PointsManager.updateUserPoints(firestore, auth, score, this@SnakeGameActivity)
-
-                // Now reset the score after the update and toast
+                updateHighScore(score)
+                submitScore(score)
                 score = 0
             }
         }
     }
 
+    private fun setupRetrofit() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://brainrotapi.ue.r.appspot.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-    // Swipe touch listener implementation
+        apiService = retrofit.create(ApiService::class.java)
+    }
+
+    private fun submitScore(score: Int) {
+        if (!currentUserUsername.isNullOrBlank()) {
+            Log.d("SnakeGameActivity", "Submitting score: $score for user: $currentUserUsername")
+
+            val scoreRequest = SubmitScoreRequest(
+                gameName = "Snake Game",
+                username = currentUserUsername!!,
+                score = score
+            )
+
+            Log.d("SnakeGameActivity", "Score Request: $scoreRequest")
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = apiService.submitScore(scoreRequest)
+
+                    if (response.isSuccessful) {
+                        Log.d("SnakeGameActivity", "Score submitted successfully!")
+
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@SnakeGameActivity,
+                                "Score submitted successfully!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    } else {
+                        Log.e("SnakeGameActivity", "Failed to submit score: ${response.errorBody()?.string()}")
+
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@SnakeGameActivity,
+                                "Failed to submit score.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+                } catch (e: Exception) {
+                    Log.e("SnakeGameActivity", "Error submitting score", e)
+
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@SnakeGameActivity,
+                            "Error submitting score.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        } else {
+            Log.e("SnakeGameActivity", "Current user username is null, score submission skipped")
+        }
+    }
+
+    private fun fetchCurrentUserUsername(onFetchComplete: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val currentUserUid = auth.currentUser?.uid ?: return@launch
+
+            try {
+                val documentSnapshot = db.collection("users").document(currentUserUid).get().await()
+                if (documentSnapshot.exists()) {
+                    currentUserUsername = documentSnapshot.getString("username")
+                    Log.d("SnakeGameActivity", "Fetched username: $currentUserUsername")
+                } else {
+                    Log.e("SnakeGameActivity", "User document not found")
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@SnakeGameActivity, "Failed to fetch user information", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("SnakeGameActivity", "Error fetching username", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@SnakeGameActivity, "Error fetching username", Toast.LENGTH_SHORT).show()
+                }
+            } finally {
+                withContext(Dispatchers.Main) {
+                    onFetchComplete()
+                }
+            }
+        }
+    }
+
     open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
         private val gestureDetector = GestureDetector(context, GestureListener())
 
