@@ -25,6 +25,7 @@ class GamePortal : AppCompatActivity() {
         Game("Tic Tac Toe", R.drawable.tic_tac_toe),
         Game("Hang Man", R.drawable.hang_man),
         Game("Flappy Bird", R.drawable.flappy_bird),
+        Game("Colour Matcher", R.drawable.logocolor),
         Game("???", R.drawable.mystery),
         Game("Players Journal", R.drawable.journal)
     )
@@ -158,6 +159,7 @@ class GamePortal : AppCompatActivity() {
             "RetroSnake" -> SnakeGameActivity::class.java
             "Tic Tac Toe" -> TikTakToeGameActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
+            "Colour Matcher" -> ColorMatchGame::class.java
             "Flappy Bird" -> FloppyBird_GameHub::class.java
 //            "Super Mystery Game" -> RetroTetris::class.java
             "Players Journal"-> ActivityPlayersJournal::class.java
