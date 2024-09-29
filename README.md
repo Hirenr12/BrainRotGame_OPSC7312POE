@@ -46,12 +46,13 @@
 ### Players Journal:
 -
 
+### Player Profile
+- Displays the user’s information such as Username, Tier, and total games played.
+- Profile information is stored in Firestore and is unique to each user.
 
-### Player Profile:
--
-
-### Player Profile Customization:
--
+### Player Profile Customization
+- Users can change their profile avatar, username, and view their gaming badges.
+- Avatar customization is tied to user tiers, and points determine which avatars are available for selection.
 
 ### LeaderBoard:
 -
@@ -68,6 +69,17 @@
 
 ## Games
 
+### TicTacToe
+- Description: TicTacToe is a classic two-player game where the objective is to get three of your marks in a row (horizontally, vertically, or diagonally) on a 3x3 grid while preventing your opponent from doing the same.
+- Features:
+  - Player vs Player mode
+  - Simple and intuitive UI
+  - Instant win or draw detection
+  - Reset and play again functionality
+- How to Play:
+  1. Players take turns placing their marks (X or O) in empty squares.
+  2. The first player to align three marks in a row wins.
+  3. If all squares are filled and no player has won, the game ends in a draw.
 
 ## Getting Started
 
