@@ -154,7 +154,7 @@ class GamePortal : AppCompatActivity() {
 //            "Tic Tac Toe" -> TicTacToeActivity::class.java
 //            "Hang Man" -> HangManActivity::class.java
             "Flappy Bird" -> FloppyBird_GameHub::class.java
-            "Super Mystery Game" -> ActivityPlayersJournal::class.java
+//            "Super Mystery Game" -> RetroTetris::class.java
             "Players Journal"-> ActivityPlayersJournal::class.java
             else -> GamePortal::class.java
         })
