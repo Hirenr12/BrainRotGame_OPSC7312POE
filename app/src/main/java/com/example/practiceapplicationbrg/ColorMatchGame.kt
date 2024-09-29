@@ -21,9 +21,7 @@ class ColorMatchGame : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
 
-    private var currentUserUsername: String? = null
-    private lateinit var auth: FirebaseAuth
-    private val db = FirebaseFirestore.getInstance()
+
 
     private var score = 0
     private var timeLeft = 10 // Game duration in seconds
@@ -138,16 +136,7 @@ class ColorMatchGame : AppCompatActivity() {
             falseButton.isEnabled = false
             colorDisplay.text = "Game Over!"
 
-            fetchCurrentUserUsername {
-                // Check for the score passed from PlayGameActivity after fetching the username
-                val score = intent.getIntExtra("score", 0)
-                if (score > 0) {
-                    // Submit the score here
 
-                    updatePoints(score) // Update points
-
-                }
-            }
         }
     }
     override fun onDestroy() {
@@ -155,45 +144,7 @@ class ColorMatchGame : AppCompatActivity() {
         gameJob?.cancel()
     }
 
-    private fun fetchCurrentUserUsername(onFetchComplete: () -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val currentUserUid = auth.currentUser?.uid ?: return@launch
 
-            try {
-                val documentSnapshot = db.collection("users").document(currentUserUid).get().await()
-                if (documentSnapshot.exists()) {
-                    currentUserUsername = documentSnapshot.getString("username")
-                    Log.d("ColorMatchGame", "Fetched username: $currentUserUsername")
-                } else {
-                    Log.e("ColorMatchGame", "User document not found")
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@ColorMatchGame, "Failed to fetch user information", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("ColorMatchGame", "Error fetching username", e)
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@ColorMatchGame, "Error fetching username", Toast.LENGTH_SHORT).show()
-                }
-            } finally {
-                // Call the callback function when fetching is complete
-                withContext(Dispatchers.Main) {
-                    onFetchComplete()
-                }
-            }
-        }
-    }
 
-    private fun updatePoints(score: Int) {
-        if (score > 0) {
-            // Ensure that UI updates like Toast happen on the main thread
-            runOnUiThread {
-                // Show the toast with the correct score
-                Toast.makeText(this, "You Got: $score Points!", Toast.LENGTH_SHORT).show()
-            }
 
-            // Update with accumulated score in Firebase
-            PointsManager.updateUserPoints(db, auth, score, this@ColorMatchGame)
-        }
-    }
 }
