@@ -161,7 +161,7 @@ class GamePortal : AppCompatActivity() {
 //            "Hang Man" -> HangManActivity::class.java
             "Colour Matcher" -> ColorMatchGame::class.java
             "Flappy Bird" -> FloppyBird_GameHub::class.java
-//            "Super Mystery Game" -> RetroTetris::class.java
+            "Retro Brick Breaker" -> RetroBrickBreakerActivity::class.java
             "Players Journal"-> ActivityPlayersJournal::class.java
             else -> GamePortal::class.java
         })
@@ -208,8 +208,8 @@ class GamePortal : AppCompatActivity() {
     private fun updateMysteryGame() {
         val mysteryGame = games.find { it.title == "???" }
         mysteryGame?.let {
-            it.title = "Super Mystery Game"
-            it.imageResId = R.drawable.dreadlord
+            it.title = "Retro Brick Breaker"
+            it.imageResId = R.drawable.retrobrickbreaker
             updateGameList()
         }
     }
