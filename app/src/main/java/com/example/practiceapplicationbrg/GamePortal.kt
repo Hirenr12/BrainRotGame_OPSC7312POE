@@ -23,7 +23,7 @@ class GamePortal : AppCompatActivity() {
     private val games = mutableListOf(
         Game("RetroSnake", R.drawable.snake_eater),
         Game("Tic Tac Toe", R.drawable.tic_tac_toe),
-        Game("Hang Man", R.drawable.hang_man),
+//        Game("Hang Man", R.drawable.hang_man),
         Game("Flappy Bird", R.drawable.flappy_bird),
         Game("Colour Matcher", R.drawable.logocolor),
         Game("???", R.drawable.mystery),
