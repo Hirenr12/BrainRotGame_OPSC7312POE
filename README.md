@@ -218,9 +218,9 @@ Once these prerequisites are set up, you should be ready to clone the project an
    
 ## Usage
    ```bash
-- **Note**: Currently, there is no external usage of Firestore DB as the app has not been published yet. The database and its features are being used internally during development and testing phases.
-- **Internal Data**: Stores and manages user profiles, game statistics, and leaderboards for internal testing purposes.
-- **Future Use**: Upon app release, Firestore will handle real-time data for user interactions, leaderboards, and game statistics.
+Note: Currently, there is no external usage of Firestore DB as the app has not been published yet. The database and its features are being used internally during development and testing phases.
+Internal Data Stores and manages user profiles, game statistics, and leaderboards for internal testing purposes.
+Future Use Upon app release, Firestore will handle real-time data for user interactions, leaderboards, and game statistics.
 
 ```
 
