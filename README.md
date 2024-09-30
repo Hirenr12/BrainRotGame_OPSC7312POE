@@ -10,6 +10,7 @@
 - [Overview](#overview)
 - [YouTube Link](#youtube-link)
 - [Features](#features)
+- [Firebase Firestore DB](#firebase-firestore-dB)
 - [Games](#games)
 - [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
 - [Getting Started](#getting-started)
@@ -114,6 +115,29 @@ The app includes a Community and Feedback page where users can:
 ### Settings
 -
 
+## Firebase Firestore DB
+
+Firebase Firestore is used to store and sync the app's data in real time, ensuring that all user data, leaderboards, and game statistics are updated instantly.
+
+### Usage in BrainRotGames:
+- **User Data**: Stores user profiles, including usernames, avatars, and badges.
+- **Leaderboard Data**: Holds the scores for global and private leaderboards, updating them in real time.
+- **Game Statistics**: Records game history, player performance, and game-specific stats.
+- **Feedback and Community Data**: Stores user-submitted feedback and interactions from the community page.
+
+### Key Firestore Collections:
+- `Users`: Stores the personal information of each user such as usernames, email, and profile settings.
+- `Leaderboards`: Contains data on the global and private leaderboards for each game, including user scores and rankings.
+- `Games`: Stores information related to individual games (like game name, rules, and metadata).
+- `Feedback`: Collects feedback from users regarding app performance, feature requests, and issues.
+
+### Firestore Security:
+Firestore rules ensure that user data is secure and only accessible to authorized users. Here are a few key points about the security setup:
+- **Authenticated Access Only**: Data access is restricted to authenticated users.
+- **Role-Based Access Control**: Leaderboard data and private user data are protected based on user roles and permissions.
+- **Real-Time Updates**: All data written to Firestore is synced in real time across all devices and users.
+
+For more information, check out the official [Firestore documentation](https://firebase.google.com/docs/firestore).
 
 ## Games
 
