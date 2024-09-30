@@ -71,8 +71,6 @@
 
 Endpoints include:
 
-    Score Routes
-
     POST /scores/scoress
         Submits a user's game score to the server and updates the leaderboard accordingly.
 
