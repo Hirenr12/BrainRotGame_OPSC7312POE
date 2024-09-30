@@ -67,6 +67,7 @@
 ### API:
 - RESTful API hosted on Google Cloud, responsible for managing leaderboard data, points calculation, and user management.
 - The API communicates with Firebase Firestore to fetch, update, and store user points, which determine a user's position on the leaderboard.
+
 Endpoints include:
 
     GET /leaderboard/global: Fetches the global leaderboard.
@@ -77,6 +78,7 @@ Endpoints include:
 
 ### Firebase Cloud Messaging:
 - Firebase Cloud Messaging (FCM) is used for sending notifications to users.
+
 Notifications are triggered for various events, such as:
 
     Updates in the user's position on the leaderboard.
@@ -92,7 +94,7 @@ Notifications are triggered for various events, such as:
 - The AI chatbot is available 24/7, enhancing the user experience by offering instant help and support.
 
 ### Community and Feedback
-- The app includes a Community and Feedback page where users can:
+The app includes a Community and Feedback page where users can:
 
     Converse with other players, share tips, strategies, and opinions about the games.
     Submit feedback to the development team, which is stored in Firebase Firestore.
