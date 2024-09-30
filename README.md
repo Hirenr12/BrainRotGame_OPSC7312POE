@@ -169,6 +169,38 @@ For more information, check out the official [Firestore documentation](https://f
 
 ## Games
 
+### RetroBrickBreaker
+
+**Description:** RetroBrickBreaker is an engaging brick-breaking game where players control a paddle to bounce a ball and break bricks while aiming for a high score.
+
+#### Features:
+- Swipe or button controls for paddle movement
+- Dynamic ball movement and brick generation
+- Score tracking with a local high score system
+- Firebase integration to submit scores and retrieve player data
+
+#### How to Play:
+1. Use swipe controls or on-screen buttons to move the paddle left and right.
+2. Bounce the ball to break the bricks and score points.
+3. Avoid letting the ball fall past the paddle to continue the game.
+4. Press the "New Game" button to restart after a game over.
+
+### RetroSnake
+
+**Description:** RetroSnake is a modern take on the classic snake game where players control a growing snake that must eat food to grow without colliding into the walls or itself.
+
+#### Features:
+- Swipe or button controls for movement (up, down, left, right)
+- Dynamic snake movement and food generation
+- Score tracking with a local high score system
+- Firebase integration to submit scores and fetch player data
+
+#### How to Play:
+1. Swipe in the direction you want the snake to move, or use the on-screen buttons.
+2. Guide the snake to eat food and grow longer, but be careful to avoid hitting the walls or yourself.
+3. When the snake collides with an obstacle, the game ends, and your score is recorded.
+
+
 ### TicTacToe
 - Description: TicTacToe is a classic two-player game where the objective is to get three of your marks in a row (horizontally, vertically, or diagonally) on a 3x3 grid while preventing your opponent from doing the same.
 - Features:
