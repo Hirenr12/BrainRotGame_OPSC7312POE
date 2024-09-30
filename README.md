@@ -67,17 +67,17 @@
 ### API:
 - RESTful API hosted on Google Cloud, responsible for managing leaderboard data, points calculation, and user management.
 - The API communicates with Firebase Firestore to fetch, update, and store user points, which determine a user's position on the leaderboard.
-- Endpoints include:
+Endpoints include:
 
     GET /leaderboard/global: Fetches the global leaderboard.
     GET /leaderboard/private/{id}: Fetches a private leaderboard by its ID.
     POST /leaderboard/private: Creates a new private leaderboard.
     PUT /user/points: Updates a user's points after a game session.
-    GET /user/search: Searches for users by username on Firebase.
+    GET /user/search: Searches for users by username on Firebase. 
 
 ### Firebase Cloud Messaging:
 - Firebase Cloud Messaging (FCM) is used for sending notifications to users.
-- Notifications are triggered for various events, such as:
+Notifications are triggered for various events, such as:
 
     Updates in the user's position on the leaderboard.
     Game invitations or challenges from other users.
