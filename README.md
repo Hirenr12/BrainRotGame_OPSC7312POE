@@ -55,13 +55,53 @@
 - Avatar customization is tied to user tiers, and points determine which avatars are available for selection.
 
 ### LeaderBoard:
--
+-Global Leaderboard: Displays the overall rankings of all users based on the points they earn from playing games.
+-Points are calculated and stored in Firebase Firestore and updated in real time using the app's API.
+-Users can view their current ranking, and the global leaderboard is continuously updated to reflect user performance across games.
 
 ### Personalised LeaderBoard
--
+-Users can create a private leaderboard to compete with selected friends or players.
+-Users can search for others by username via Firebase Firestore and add them to their private leaderboard.
+-Each private leaderboard is isolated from the global rankings and can be customized to include specific players.
 
-### Support and Feedback
--
+### API:
+-RESTful API hosted on Google Cloud, responsible for managing leaderboard data, points calculation, and user management.
+-The API communicates with Firebase Firestore to fetch, update, and store user points, which determine a user's position on the leaderboard.
+-Endpoints include:
+
+    GET /leaderboard/global: Fetches the global leaderboard.
+    GET /leaderboard/private/{id}: Fetches a private leaderboard by its ID.
+    POST /leaderboard/private: Creates a new private leaderboard.
+    PUT /user/points: Updates a user's points after a game session.
+    GET /user/search: Searches for users by username on Firebase.
+
+### Firebase Cloud Messaging:
+-Firebase Cloud Messaging (FCM) is used for sending notifications to users.
+-Notifications are triggered for various events, such as:
+
+    Updates in the user's position on the leaderboard.
+    Game invitations or challenges from other users.
+    Changes in a private leaderboard's composition.
+
+-FCM ensures users are engaged and informed of important updates within the app.
+
+
+### Support AI
+-The app integrates AI-powered support through Gemini, which powers a support chatbot.
+-The chatbot assists users by troubleshooting common issues, answering general questions, and providing guidance on how to use the app's features.
+-The AI chatbot is available 24/7, enhancing the user experience by offering instant help and support.
+
+### Community and Feedback
+-The app includes a Community and Feedback page where users can:
+
+    Converse with other players, share tips, strategies, and opinions about the games.
+    Submit feedback to the development team, which is stored in Firebase Firestore.
+    The feedback mechanism allows us to receive direct user input on improving the app, which helps guide future updates and feature improvements.
+
+### Privacy Policy
+-The app includes a Privacy Policy to ensure transparency regarding how user data is collected, stored, and used.
+-The privacy policy outlines the use of Firebase services, the collection of data (such as usernames, points, and leaderboard entries), and how this information is protected.
+
 
 ### Settings
 -
@@ -80,6 +120,16 @@
   1. Players take turns placing their marks (X or O) in empty squares.
   2. The first player to align three marks in a row wins.
   3. If all squares are filled and no player has won, the game ends in a draw.
+
+### Floppy Bird
+-A fun and simple game inspired by the classic Flappy Bird.
+-Players must navigate a bird through a series of obstacles, earning points based on how far they progress.
+-As part of the game, players earn points that are updated to the global leaderboard after each session.
+
+### Colour Matcher
+-A quick-thinking game where the player must determine whether the font color matches the word's spelling.
+-Players are shown words with different font colors and must answer True or False depending on whether the displayed font color matches the color the word spells out.
+-Points are awarded based on accuracy and speed, and these points contribute to both the global and private leaderboards.
 
 ## Getting Started
 
@@ -205,4 +255,8 @@ Please ensure compliance with the respective licenses of these third-party servi
 
 
 ## Code Attribution
+    API deployment was done using Google Cloud Endpoints. For more information, visit: Google Cloud Endpoints API Deployment.
+    Firebase Cloud Messaging setup and notifications were configured following the guide from MagicBell. For more details, refer to: Firebase Cloud Messaging Tutorial.
+    The Gemini AI support chatbot was integrated based on the Gemini API Quickstart for Android. For implementation details, see: Gemini API Quickstart.
+
 
