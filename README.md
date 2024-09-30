@@ -2,8 +2,7 @@
 # BrainRotGames
 
 ## Overview
-
-
+**BrainRotGames** is a mobile gaming app that offers a diverse collection of games, designed to provide an immersive and engaging experience for users. By integrating Firebase services such as Authentication and Firestore, the app allows players to securely sign in, track their progress, and enjoy personalized experiences. With a strong focus on community interaction, the app encourages users to compete with others, unlock rewards, and continuously improve their skills across various games, all while ensuring data is synced in real-time for a seamless experience.
 
 ## Table of Contents
 
