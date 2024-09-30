@@ -54,38 +54,46 @@
 - Users can change their profile avatar, username, and view their gaming badges.
 - Avatar customization is tied to user tiers, and points determine which avatars are available for selection.
 
-### LeaderBoard:
-- Global Leaderboard: Displays the overall rankings of all users based on the points they earn from playing games.
-- Points are calculated and stored in Firebase Firestore and updated in real time using the app's API.
-- Users can view their current ranking, and the global leaderboard is continuously updated to reflect user performance across games.
+### Global LeaderBoard:
+- Showcases the overall rankings of all users, based on the scores earned from playing different games.
+- Scores are calculated, retrieved, and updated in real time through the app’s REST API, with all data seamlessly stored in Firebase Firestore.
+- Users can view their current rankings, and the global leaderboard is dynamically refreshed to reflect live performance across all games.
 
-### Personalised LeaderBoard
-- Users can create a private leaderboard to compete with selected friends or players.
-- Users can search for others by username via Firebase Firestore and add them to their private leaderboard.
-- Each private leaderboard is isolated from the global rankings and can be customized to include specific players.
+### Private LeaderBoard
+- Private Leaderboard: Allows users to create exclusive leaderboards to compete with selected friends or specific players.
+- Users can add others from the global leaderboard, which will automatically include them in their private leaderboard.
+- Each private leaderboard operates independently from the global rankings and is fully customizable to feature only chosen participants.
+- All leaderboard functionalities, including fetching data from Firestore, adding users, and updating scores, are efficiently managed through our REST API, ensuring seamless real-time synchronization and personalized leaderboard experiences.
 
 ### API:
-- RESTful API hosted on Google Cloud, responsible for managing leaderboard data, points calculation, and user management.
-- The API communicates with Firebase Firestore to fetch, update, and store user points, which determine a user's position on the leaderboard.
+- A RESTful API, hosted on Google Cloud, is responsible for managing leaderboard data and high score calculations.
+- The API interacts with Firebase Firestore to retrieve, update, and store user high scores, which are used to determine each user's ranking on the leaderboard
 
 Endpoints include:
 
-    GET /leaderboard/global: Fetches the global leaderboard.
-    GET /leaderboard/private/{id}: Fetches a private leaderboard by its ID.
-    POST /leaderboard/private: Creates a new private leaderboard.
-    PUT /user/points: Updates a user's points after a game session.
-    GET /user/search: Searches for users by username on Firebase. 
+    Score Routes
+
+    POST /scores/scoress
+        Submits a user's game score to the server and updates the leaderboard accordingly.
+
+    GET /leaderboard/global/allGames
+        Fetches a list of all available games in the global leaderboard.
+
+    GET /leaderboard/private/privateGames/:currentUser
+        Retrieves all private games for the currently logged-in user.
+
+    GET /leaderboard/global/:gameName
+        Fetches the global leaderboard for a specific game by its name.
+
+    POST /leaderboard/private/:gameName/:currentUser/:selectedUser
+        Adds a selected user to the currently logged in user's private leaderboard for a specified game.
+
+    GET /leaderboard/private/:gameName/:username
+        Retrieves the private leaderboard for a specific game and user.
+        
 
 ### Firebase Cloud Messaging:
-- Firebase Cloud Messaging (FCM) is used for sending notifications to users.
-
-Notifications are triggered for various events, such as:
-
-    Updates in the user's position on the leaderboard.
-    Game invitations or challenges from other users.
-    Changes in a private leaderboard's composition.
-
-- FCM ensures users are engaged and informed of important updates within the app.
+- Firebase Cloud Messaging (FCM) is leveraged to deliver real-time notifications to users, ensuring instant communication and updates. FCM allows the app to send timely alerts even when the app is running in the background or closed. This enhances user engagement and ensures that important information is promptly received.
 
 
 ### Support AI
@@ -124,9 +132,9 @@ The app includes a Community and Feedback page where users can:
   3. If all squares are filled and no player has won, the game ends in a draw.
 
 ### Floppy Bird
-- A fun and simple game inspired by the classic Flappy Bird.
-- Players must navigate a bird through a series of obstacles, earning points based on how far they progress.
-- As part of the game, players earn points that are updated to the global leaderboard after each session.
+- A fun and engaging game inspired by the classic Flappy Bird, where players guide a bird through a series of obstacles, earning points based on their progression.
+- Players accumulate points throughout the game, which are added to their account after each session, reflecting their performance.
+- Scores are updated on the global leaderboard in real time, with high score validations and updates seamlessly managed by the app’s API, ensuring accurate ranking and recognition of player achievements.
 
 ### Colour Matcher
 - A quick-thinking game where the player must determine whether the font color matches the word's spelling.
@@ -251,14 +259,170 @@ This project uses various third-party services and resources, each of which may 
   - Firebase Authentication and Firestore DB are part of Google Firebase and are subject to the [Firebase Terms of Service](https://firebase.google.com/terms) and the [Google Cloud Platform Terms of Service](https://cloud.google.com/terms).
   - Google Sign-In is subject to the [Google API Terms of Service](https://developers.google.com/terms).
 
+- **Google Cloud** Google Cloud: The project’s RESTful API is hosted on Google Cloud and is responsible for managing:
+  - leaderboard data
+  - high score calculations
+  - and facilitating communication with Firebase Firestore for real-time updates. The API is subject to the Google Cloud Platform Terms of Service.
+
 Please ensure compliance with the respective licenses of these third-party services when using, modifying, or distributing this project.
 
 ## Acknowledgments
-
+- **The Firebase Cloud**: Messaging (FCM) setup and notification functionality were implemented by following the official documentation provided by Firebase for setting up FCM on Android. The setup and code examples were adapted from the Firebase Cloud Messaging for Android (Kotlin) guide: [https://firebase.google.com/docs/cloud-messaging/android/client#kotlin+ktx_1]
+- **RESTFUL API**: The API deployment for this project was completed using Google Cloud Platform, which provides API management services and allows secure, scalable API hosting on Google Cloud. The process for deploying the API was based on the guidelines and instructions provided in the YouTube tutorial from Fireship: [https://www.youtube.com/watch?v=-MTSQjw5DrM&t=274s]
+- **The Gemini AI**: support chatbot was integrated based on the Gemini API Quickstart for Android. For implementation details, see: Gemini API Quickstart.
 
 ## Code Attribution
-    API deployment was done using Google Cloud Endpoints. For more information, visit: Google Cloud Endpoints API Deployment.
-    Firebase Cloud Messaging setup and notifications were configured following the guide from MagicBell. For more details, refer to: Firebase Cloud Messaging Tutorial.
-    The Gemini AI support chatbot was integrated based on the Gemini API Quickstart for Android. For implementation details, see: Gemini API Quickstart.
+>
+>__________ **Code Attribution** __________     
+> 
+>The following method was taken from Firebase:   
+>Author: Firebase
+>Link: [https://firebase.google.com/docs/cloud-messaging/android/client#kotlin+ktx_1]  
+>
+>     class MyFirebaseMessagingService : FirebaseMessagingService() {
+>         override fun onMessageReceived(remoteMessage: RemoteMessage) {
+>             // Log the sender of the message
+>             Log.d(TAG, "From: ${remoteMessage.from}")
+>
+>             // Check if the message contains a notification payload
+>             remoteMessage.notification?.let {
+>                 Log.d(TAG, "Message Notification Body: ${it.body}")
+>                 sendNotification(it.body)
+>             }
+>
+>             // Also display a toast with the message details
+>             sendToast(remoteMessage.from, remoteMessage.notification?.body)
+>         }
+>
+>         private fun sendToast(from: String?, body: String?) {
+>             // Ensure the body is not null
+>             body?.let {
+>                Handler(Looper.getMainLooper()).post {
+>                     // Display a toast message with the sender and body
+>                     Toast.makeText(applicationContext, "$from -> $body", Toast.LENGTH_SHORT).show()
+>                 }
+>             }
+>         }
+>
+>         private fun sendNotification(messageBody: String?) {
+>             // Ensure the message body is not null
+>             messageBody?.let {
+>                 val intent = Intent(this, MainActivity::class.java)
+>                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+>
+>                 // Using FLAG_IMMUTABLE for PendingIntent to ensure compatibility with API 31+
+>                 val pendingIntent = PendingIntent.getActivity(
+>                     this,
+>                     0, // requestCode
+>                     intent,
+>                     PendingIntent.FLAG_IMMUTABLE
+>                 )
+>
+>                 val channelId = "My Channel ID"
+>                 val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+>                 val notificationBuilder = NotificationCompat.Builder(this, channelId)
+>                     .setSmallIcon(R.drawable.ic_stat_notification)
+>                     .setContentTitle("My New Notification")
+>                     .setContentText(messageBody)
+>                     .setAutoCancel(true)
+>                     .setSound(defaultSoundUri)
+>                     .setContentIntent(pendingIntent)
+>
+>                 val notificationManager =
+>                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+>
+>                 // Since Android Oreo (API 26), a notification channel is required
+>                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+>                     val channel = NotificationChannel(
+>                         channelId,
+>                         "Channel human-readable title",
+>                         NotificationManager.IMPORTANCE_DEFAULT
+>                     )
+>                     notificationManager.createNotificationChannel(channel)
+>                 }
+>
+>                 val notificationId = 0
+>                 notificationManager.notify(notificationId, notificationBuilder.build())
+>             }
+>         }
+>
+>         companion object {
+>             private const val TAG = "MyFirebaseMsgService"
+>         }
+>     }
+>        __________ **end** __________
+>
+>
+>__________ **Code Attribution** __________     
+> 
+>The following method was taken from Firebase:   
+>Author: Firebase
+>Link: [https://firebase.google.com/docs/cloud-messaging/android/client#kotlin+ktx_1] 
+>
+>     //Firebase Messaging
+>             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+>                 if (!task.isSuccessful) {
+>                     Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+>                     return@OnCompleteListener
+>                 }
+>
+>                 // Get new FCM registration token
+>                 val token = task.result
+>
+>                 // Log and toast
+>                 val msg = getString(R.string.msg_token_fmt, token)
+>                 Log.d(TAG, msg)
+>                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+>             })
+>        __________ **end** __________
+>
+>
+>__________ **Code Attribution** __________     
+> 
+>The following method was taken from The Stack Overflow Blog:   
+>Author 1: John Au-Yeung
+>Link: [https://stackoverflow.blog/author/john-au-yeung/]
+>Author 2: Ryan Donovan
+>Link: [https://stackoverflow.blog/author/rdonovan/]
+>
+>Link to website: [https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/]
+>
+>     const express = require('express');
+>     const bodyParser = require('body-parser');
+>
+>     const app = express();
+>
+>     // employees data in a database
+>     const employees = [
+>       { firstName: 'Jane', lastName: 'Smith', age: 20 },
+>       //...
+>       { firstName: 'John', lastName: 'Smith', age: 30 },
+>       { firstName: 'Mary', lastName: 'Green', age: 50 },
+>
+>
+>     app.use(bodyParser.json());
+>
+>     app.get('/employees', (req, res) => {
+>       const { firstName, lastName, age } = req.query;
+>       let results = [...employees];
+>       if (firstName) {
+>         results = results.filter(r => r.firstName === firstName);
+>       }
+>
+>       if (lastName) {
+>         results = results.filter(r => r.lastName === lastName);
+>       }
+>
+>       if (age) {
+>         results = results.filter(r => +r.age === +age);
+>       }
+>       res.json(results);
+>     });
+>
+>     app.listen(3000, () => console.log('server started'));
+>        __________ **end** __________
+>
+>
+
 
 
