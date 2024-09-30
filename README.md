@@ -10,6 +10,7 @@
 - [Overview](#overview)
 - [YouTube Link](#youtube-link)
 - [Features](#features)
+- [Firebase Authentication](#firebase-authentication)
 - [Firebase Firestore DB](#firebase-firestore-dB)
 - [Games](#games)
 - [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
@@ -115,6 +116,33 @@ The app includes a Community and Feedback page where users can:
 ### Settings
 -
 
+
+## Firebase Authentication
+
+Firebase Authentication is used to manage user sign-ins and authentication securely. It supports multiple authentication providers, allowing users to sign in via email, Google, or other identity providers.
+
+### Authentication Providers Used:
+- **Email and Password**: Users can sign up and log in using their email and password, which are securely managed by Firebase Authentication.
+- **Google Sign-In**: Users can sign in using their Google accounts, which provides a seamless and secure authentication experience.
+
+### Features:
+- **Secure User Management**: Firebase Authentication handles user credentials securely. Passwords are never stored in plain text, and authentication tokens are generated for each session.
+- **Firebase User Sessions**: Once authenticated, users receive an ID token that grants them access to their Firestore data, games, and leaderboards.
+- **Google Sign-In Integration(SSO)**: Allows users to quickly authenticate using their existing Google account, simplifying the login process and improving user experience.
+  
+### Authentication Flow:
+1. **Sign Up**: New users can sign up with their email and password or use Google Sign-In to register instantly.
+2. **Login**: Existing users can log in using the method they registered with.
+3. **Token Management**: After successful login, a token is generated, which is used for authentication throughout the app, allowing secure access to Firestore data.
+4. **Session Persistence**: Firebase Authentication ensures user sessions are persistent even when the app is closed.
+
+### Security:
+- All authentication data is encrypted.
+- Firebase Authentication also supports two-factor authentication for enhanced security.
+
+For more details, refer to the official [Firebase Authentication documentation](https://firebase.google.com/docs/auth).
+
+
 ## Firebase Firestore DB
 
 Firebase Firestore is used to store and sync the app's data in real time, ensuring that all user data, leaderboards, and game statistics are updated instantly.
@@ -127,9 +155,7 @@ Firebase Firestore is used to store and sync the app's data in real time, ensuri
 
 ### Key Firestore Collections:
 - `Users`: Stores the personal information of each user such as usernames, email, and profile settings.
-- `Leaderboards`: Contains data on the global and private leaderboards for each game, including user scores and rankings.
-- `Games`: Stores information related to individual games (like game name, rules, and metadata).
-- `Feedback`: Collects feedback from users regarding app performance, feature requests, and issues.
+- `tips`: Collects feedback from users regarding app performance, feature requests, and issues.
 
 ### Firestore Security:
 Firestore rules ensure that user data is secure and only accessible to authorized users. Here are a few key points about the security setup:
@@ -138,6 +164,8 @@ Firestore rules ensure that user data is secure and only accessible to authorize
 - **Real-Time Updates**: All data written to Firestore is synced in real time across all devices and users.
 
 For more information, check out the official [Firestore documentation](https://firebase.google.com/docs/firestore).
+
+
 
 ## Games
 
@@ -162,19 +190,6 @@ For more information, check out the official [Firestore documentation](https://f
 - A quick-thinking game where the player must determine whether the font color matches the word's spelling.
 - Players are shown words with different font colors and must answer True or False depending on whether the displayed font color matches the color the word spells out.
 - Points are awarded based on accuracy and speed, and these points contribute to both the global and private leaderboards.
-
-## Getting Started
-
-To get started with BrainRotGames, follow these steps:
-
-1. Clone or download the repository to your local machine:
-   ```bash
-   git clone [https://github.com/]
-
-3. Application Note:
-   ```bash
-  
-
 
 
 ## Prerequisites For Developer Usage
@@ -202,8 +217,12 @@ Once these prerequisites are set up, you should be ready to clone the project an
 
    
 ## Usage
+   ```bash
+- **Note**: Currently, there is no external usage of Firestore DB as the app has not been published yet. The database and its features are being used internally during development and testing phases.
+- **Internal Data**: Stores and manages user profiles, game statistics, and leaderboards for internal testing purposes.
+- **Future Use**: Upon app release, Firestore will handle real-time data for user interactions, leaderboards, and game statistics.
 
-
+```
 
 
 ## Testing
