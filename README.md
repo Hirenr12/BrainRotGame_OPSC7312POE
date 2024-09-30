@@ -66,6 +66,22 @@ The **GamePortal** is a central hub within the application that allows users to 
 
 This combination of features aims to create an engaging and interactive gaming environment, encouraging users to explore and enjoy their favorite games while discovering new ones.
 
+### Players Journal
+
+The **Players Journal** is a feature within the application that tracks and displays user progress through a tier-based system. This interactive journal allows players to monitor their achievements and points, enhancing their engagement and motivation. Key features of the Players Journal:
+
+- **Tier System:** Users progress through a series of tiers based on the points they accumulate. Each tier represents a level of achievement, starting from **Fresh Meat** and advancing to the **Dread Lord**. Each tier is associated with a specific point threshold and an image, providing visual representation of the user's progress.
+
+- **Dynamic Updates:** The journal dynamically updates as users earn points. It retrieves the current user's points from Firebase Firestore and displays all unlocked tiers based on their point total. This ensures that users always have up-to-date information about their progress.
+
+- **User Authentication:** The Players Journal integrates Firebase Authentication to ensure that each user's data is securely retrieved and displayed. Only authenticated users can access their personal journal, providing a customized experience.
+
+- **RecyclerView for Display:** The journal uses a `RecyclerView` to efficiently display the list of unlocked tiers. This approach allows for smooth scrolling and a responsive layout, enhancing the user experience.
+
+- **Points Management:** The system includes a method to manage user points, allowing for future enhancements like adding points through gameplay or achievements. Currently, it verifies user points upon journal access to ensure the correct tiers are displayed.
+
+The Players Journal aims to provide users with a sense of achievement and progression, encouraging them to engage more deeply with the app's features and games. By visualizing their journey through tiers, users are motivated to continue playing and earning points.
+
 
 ### Players Journal:
 -
