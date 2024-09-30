@@ -64,7 +64,7 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 // Fetch current user username from Firestore
-                currentUserUsername = fetchCurrentUserUsername() ?: currentUserUsername // Use the fetched username or keep default
+                currentUserUsername = fetchCurrentUserUsername() ?: currentUserUsername
                 Log.d("PrivateLeaderboard", "Fetched current user username: $currentUserUsername")
 
                 // Fetch all private games for the current user
@@ -105,7 +105,7 @@ class PrivateLeaderboardActivity : AppCompatActivity() {
                 Log.d("PrivateLeaderboard", "Loading private leaderboard for game: $gameName and user: $currentUserUsername")
 
                 // Fetch current user username from Firestore
-                currentUserUsername = fetchCurrentUserUsername() ?: currentUserUsername // Use the fetched username or keep default
+                currentUserUsername = fetchCurrentUserUsername() ?: currentUserUsername 
                 Log.d("PrivateLeaderboard", "Fetched current user username: $currentUserUsername")
 
                 // Make API call to get private leaderboard entries
