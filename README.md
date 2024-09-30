@@ -351,6 +351,7 @@ Please ensure compliance with the respective licenses of these third-party servi
 >        __________ **end** __________
 >
 >
+>
 >__________ **Code Attribution** __________     
 > 
 >The following method was taken from Firebase:   
@@ -375,11 +376,13 @@ Please ensure compliance with the respective licenses of these third-party servi
 >        __________ **end** __________
 >
 >
+>
 >__________ **Code Attribution** __________     
 > 
 >The following method was taken from The Stack Overflow Blog:   
 >Author 1: John Au-Yeung
 >Link: [https://stackoverflow.blog/author/john-au-yeung/]
+>
 >Author 2: Ryan Donovan
 >Link: [https://stackoverflow.blog/author/rdonovan/]
 >
