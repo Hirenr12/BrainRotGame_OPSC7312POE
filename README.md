@@ -28,22 +28,44 @@
 ## Features
 
 ### Homepage:
--
-
+- Welcoming interface with game title and subtitle.
+- Buttons for user registration and login.
+  
 ### Registration:
--
+-The registration feature allows new users to create an account in the application. Below is an overview of how the registration process works.
+
 
 ### Login:
--
 
-### GamePortal:
--
+The login feature allows users to access their accounts using either email/password authentication or Google Single Sign-On (SSO).
 
-### Favorites:
--
+#### Features
+- **Email and Password Authentication**:
+  - Users can enter their registered email and password to log in.
+  - Validation ensures that both fields are filled before attempting to log in.
 
-### Mystery Game:
--
+- **Google Single Sign-On (SSO)**:
+  - Users can log in using their Google account, simplifying the authentication process and enhancing user experience.
+
+
+### GamePortal
+
+The **GamePortal** is a central hub within the application that allows users to explore and play various games. It features a user-friendly interface that organizes games in a grid layout, enabling easy navigation and selection. Key functionalities of the GamePortal include:
+
+- **Game Listing:** The portal displays a list of available games, each represented by a title and an image. The current selection includes popular games like **RetroSnake**, **Tic Tac Toe**, **Flappy Bird**, and **Colour Matcher**.
+
+- **Favorites Management:** Users can mark games as favorites, enhancing their engagement by allowing them to prioritize and quickly access their preferred games. The favorite status is persisted in Firebase Firestore, ensuring that preferences are retained across sessions.
+
+- **Game Navigation:** Users can navigate to specific game details and gameplay activities by clicking on the respective game tiles. Each game leads to its dedicated activity, where users can engage in gameplay.
+
+- **User Authentication:** The portal integrates Firebase Authentication, allowing users to sign in and access their personalized game experience. It also includes a sign-out functionality to ensure secure user sessions.
+
+- **Mystery Game Unlocking:** The GamePortal features a unique element of mystery games, which can be unlocked based on user points. Users earn points through gameplay, and upon reaching specific thresholds, they can unlock special games, enhancing the excitement of discovery.
+
+- **Toolbar Navigation:** The top toolbar provides quick access to additional features, such as user profile, settings, leaderboards, and a personal journal.
+
+This combination of features aims to create an engaging and interactive gaming environment, encouraging users to explore and enjoy their favorite games while discovering new ones.
+
 
 ### Players Journal:
 -
