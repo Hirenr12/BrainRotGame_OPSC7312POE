@@ -1,5 +1,6 @@
 package com.example.practiceapplicationbrg
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -19,11 +22,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import java.util.concurrent.Executor
+import androidx.core.content.ContextCompat
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import org.chromium.net.NetworkChangeNotifier.isOnline
+
 
 class Login : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var executor: Executor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +45,41 @@ class Login : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+
+        // Biometric Authentication
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    // Navigate to GamePortal after successful biometric authentication
+                    startActivity(Intent(this@Login, GamePortal::class.java))
+                    finish()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login for GameHub")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Use account password")
+            .build()
+
+        // Set up biometric authentication on app launch or manually
+        val biometricManager = BiometricManager.from(this)
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) ==
+            BiometricManager.BIOMETRIC_SUCCESS) {
+            biometricPrompt.authenticate(promptInfo)
+        }
 
         // Set up edge-to-edge insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -42,7 +90,7 @@ class Login : AppCompatActivity() {
 
         // Set up Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // Ensure you have this in strings.xml
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
@@ -53,7 +101,7 @@ class Login : AppCompatActivity() {
         val passwordField: EditText = findViewById(R.id.password)
         val submitButton: Button = findViewById(R.id.submit_button)
         val googleSignInButton: ImageView = findViewById(R.id.ic_google)
-        val txtSignInGoogle: TextView = findViewById(R.id.txtSignInGoogle)  // Reference to the TextView
+        val txtSignInGoogle: TextView = findViewById(R.id.txtSignInGoogle)
 
         // Set up the submit button click listener
         submitButton.setOnClickListener {
@@ -64,28 +112,24 @@ class Login : AppCompatActivity() {
         googleSignInButton.setOnClickListener {
             signInWithGoogle()
         }
-        txtSignInGoogle.setOnClickListener {  // Make the TextView clickable
+        txtSignInGoogle.setOnClickListener {
             signInWithGoogle()
         }
     }
 
     private fun loginUser(email: String, password: String) {
-        // Validate input
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Sign in with Firebase Auth
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Login successful, navigate to the main activity
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, GamePortal::class.java))
                     finish()
                 } else {
-                    // Handle login failure
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
@@ -93,13 +137,12 @@ class Login : AppCompatActivity() {
 
     private fun signInWithGoogle() {
         val signInIntent: Intent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)  // Removed the incorrect txtSignInGoogle parameter
+        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
@@ -110,17 +153,14 @@ class Login : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             account?.let {
-                // Google Sign-In was successful, authenticate with Firebase
                 val credential = GoogleAuthProvider.getCredential(it.idToken, null)
                 auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Login successful, navigate to the main activity
                             Toast.makeText(this, "Google login successful", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, GamePortal::class.java))
                             finish()
                         } else {
-                            // Handle login failure
                             Toast.makeText(this, "Google login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -130,4 +170,3 @@ class Login : AppCompatActivity() {
         }
     }
 }
-
