@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
     id("com.google.gms.google-services") // Add the Google services plugin here
+    id("kotlin-kapt") // Kapt support
 }
 
 android {
@@ -76,12 +77,25 @@ dependencies {
     implementation(libs.gsonConverter)
     implementation(libs.kotlinCoroutines)
 
-    // Add your generative AI dependency
+    // Generative AI dependencies
     implementation ("com.google.ai.client.generativeai:generativeai:0.1.1")
 
     implementation ("androidx.cardview:cardview:1.0.0")
 
     implementation ("androidx.biometric:biometric:1.2.0-alpha04")
+
+
+    // Add Room dependencies for offline database support
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+
+    // Add SQLite support
+    implementation("androidx.sqlite:sqlite:2.3.1")
+
+    // Kotlin coroutines for Room for async operations
+    implementation("androidx.room:room-coroutines:2.5.2")
+
 
 
 

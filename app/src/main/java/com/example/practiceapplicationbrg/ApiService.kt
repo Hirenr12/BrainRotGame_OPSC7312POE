@@ -34,6 +34,8 @@ interface ApiService {
     @GET("leaderboard/private/privateGames/{username}")
     suspend fun getAllPrivateGames(@Path("username") username: String): List<String>
 
+
+    // method to update high scores
     @POST("scores/scoress")
     suspend fun submitScore(@Body submitScoreRequest: SubmitScoreRequest): Response<Unit>
 
