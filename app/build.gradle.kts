@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
     id("com.google.gms.google-services") // Add the Google services plugin here
-    id("kotlin-kapt") // Kapt support
+
+    id("kotlin-kapt") // Needed for annotation processing with Kotlin
 }
 
 android {
@@ -28,6 +29,7 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,6 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
@@ -85,16 +88,21 @@ dependencies {
     implementation ("androidx.biometric:biometric:1.2.0-alpha04")
 
 
-    // Add Room dependencies for offline database support
-    implementation("androidx.room:room-runtime:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
+
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version") // Use kapt for annotation processing
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    implementation("androidx.room:room-guava:$room_version")
+    testImplementation("androidx.room:room-testing:$room_version")
+    implementation("androidx.room:room-paging:$room_version")
+
 
     // Add SQLite support
     implementation("androidx.sqlite:sqlite:2.3.1")
 
-    // Kotlin coroutines for Room for async operations
-    implementation("androidx.room:room-coroutines:2.5.2")
 
 
 
