@@ -146,7 +146,7 @@ class FloppyBird_MainActivity : AppCompatActivity() {
             val scoreRequest = SubmitScoreRequest(
                 gameName = "Floppy Bird",
                 username = currentUserUsername!!,
-                score = score // Ensure this matches the data class
+                score = score // This matches the data class
             )
 
             Log.d(Tag, "Score Request: $scoreRequest") // Log the full request
@@ -164,7 +164,7 @@ class FloppyBird_MainActivity : AppCompatActivity() {
                         // Show success toast message
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
-                                this@FloppyBird_MainActivity, // Replace with your actual activity name
+                                this@FloppyBird_MainActivity,
                                 "Score submitted successfully!",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -176,7 +176,7 @@ class FloppyBird_MainActivity : AppCompatActivity() {
                         // Optionally, show failure toast message
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
-                                this@FloppyBird_MainActivity, // Replace with your actual activity name
+                                this@FloppyBird_MainActivity,
                                 "Failed to submit score.",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -189,7 +189,7 @@ class FloppyBird_MainActivity : AppCompatActivity() {
                     // Optionally, show error toast message
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
-                            this@FloppyBird_MainActivity, // Replace with your actual activity name
+                            this@FloppyBird_MainActivity,
                             "Error submitting score.",
                             Toast.LENGTH_SHORT
                         ).show()

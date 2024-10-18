@@ -13,7 +13,7 @@ class FloppyBirdHelpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_floppy_bird_help)  // Make sure this matches your XML layout file name
+        setContentView(R.layout.activity_floppy_bird_help)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
