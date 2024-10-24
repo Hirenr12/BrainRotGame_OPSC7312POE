@@ -102,8 +102,6 @@ class FloppyBird_MainActivity : AppCompatActivity() {
 
             displayHighScore()
 
-            fetchHighScoreDB()
-
             // Check for the score passed from PlayGameActivity after fetching the username
             val score = intent.getIntExtra("score", 0)
             if (score > 0) {
@@ -111,6 +109,13 @@ class FloppyBird_MainActivity : AppCompatActivity() {
                 updatePoints(score) // Update points
 
             }
+
+
+            // Check if online before fetching high scores from the database
+            if (NetworkUtil.isConnected(this)) {
+                fetchHighScoreDB()
+            }
+
         }
 
 
@@ -400,31 +405,67 @@ class FloppyBird_MainActivity : AppCompatActivity() {
         ).show()
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private fun fetchHighScoreDB() {
-        // Ensure the current user's username is not null
-        val username = currentUserUsername ?: return
-        val gameName = "Floppy Bird"
+        // Check if the user is connected to the internet
+        val isOnline = NetworkUtil.isConnected(this)
 
-        // Call the ViewModel's method to get the high score from the local database
-        val highScoreLiveData = highScoreViewModel.getHighestScore(username, gameName)
+        if (isOnline) {
+            // Ensure the current user's username is not null
+            val username = currentUserUsername ?: return
+            val gameName = "Floppy Bird"
 
-        // Observe the LiveData to handle the result when it changes
-        highScoreLiveData.observe(this, { highScoreData ->
-            highScoreData?.let {
-                // Fetch the high score from the API
-                fetchHighScoreApi { apiHighScore ->
-                    // If the local high score is higher than the one from the API, submit it
-                    if (it.score > apiHighScore) {
-                        submitScore(it.score)
-                        fetchAllPointsDB(username,gameName)
+            // Call the ViewModel's method to get the high score from the local database
+            val highScoreLiveData = highScoreViewModel.getHighestScore(username, gameName)
+
+            // Observe the LiveData to handle the result when it changes
+            highScoreLiveData.observe(this, { highScoreData ->
+                highScoreData?.let {
+                    // Fetch the high score from the API
+                    fetchHighScoreApi { apiHighScore ->
+                        // If the local high score is higher than the one from the API, submit it
+                        if (it.score > apiHighScore) {
+                            submitScore(it.score)
+                            fetchAllPointsDB(username, gameName)
+                            deleteAllScoresDB()
+                        }
                     }
+                } ?: run {
+                    // Handle the case when there's no high score in the local database
+                    Log.d("FloppyBird_MainActivity", "No high score found in the local database.")
                 }
-            } ?: run {
-                // Handle the case when there's no high score in the local database
-                Log.d("FloppyBird_MainActivity", "No high score found in the local database.")
-            }
-        })
+            })
+        } else {
+            // If offline, log a message or handle offline behavior as needed
+            Log.d("FloppyBird_MainActivity", "No internet connection. Cannot sync high score.")
+            Toast.makeText(this, "No internet connection. High score will not be synced.", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
 
     private fun fetchAllPointsDB(username: String, gameName: String) {
@@ -454,10 +495,12 @@ class FloppyBird_MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun deleteAllScoresDB() {
+        // Use the ViewModel to delete all scores
+        highScoreViewModel.deleteAllScores()
 
-
-
-
+        Toast.makeText(this, "All scores have been deleted!", Toast.LENGTH_SHORT).show()
+    }
 
 
 
