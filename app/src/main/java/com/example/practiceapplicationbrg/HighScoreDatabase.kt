@@ -6,23 +6,32 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [HighScoreDataClass::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
+abstract class HighScoreDatabase : RoomDatabase()
+{
     abstract fun highScoreDAO(): HighScoreDAO
 
-    companion object {
+    companion object
+    {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: HighScoreDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
+        fun getDatabase(context: Context) : HighScoreDatabase
+        {
+            return INSTANCE?: synchronized(this)
+            {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
-                    "app_database"
+                    HighScoreDatabase::class.java,
+                    "high_score_database"
                 ).build()
                 INSTANCE = instance
                 instance
             }
         }
+
     }
+
+
+
+
 }

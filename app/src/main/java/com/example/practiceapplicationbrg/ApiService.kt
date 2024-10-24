@@ -39,6 +39,12 @@ interface ApiService {
     @POST("scores/scoress")
     suspend fun submitScore(@Body submitScoreRequest: SubmitScoreRequest): Response<Unit>
 
+    // Method to fetch the high score for a specific game and user
+    @GET("scores/highscore/{gameName}/{username}")
+    suspend fun getHighScore(
+        @Path("gameName") gameName: String,
+        @Path("username") username: String
+    ): HighScoreResponse
 
 }
 
@@ -55,4 +61,9 @@ data class SubmitScoreRequest(
     val gameName: String,
     val username: String,
     val score: Int
+)
+
+// Response model for fetching the high score
+data class HighScoreResponse(
+    val highScore: Int
 )

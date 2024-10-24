@@ -133,14 +133,14 @@ class PlayThread(
             if (i == birdDie.maxFrame) {
                 isRunning = false
 
-                // Save the score and check for high score
+                /*// Save the score and check for high score
                 val highScore = sharedPreferences.getInt("high_score", 0)
                 if (score > highScore) {
                     editor.putInt("high_score", score)
                     editor.apply()
-                }
+                }*/
 
-                // Redirect to MainActivity with the score
+                // Redirect to FloppyBird_MainActivity with the score
                 val intent = Intent(context, FloppyBird_MainActivity::class.java)
                 intent.putExtra("score", score)
                 context.startActivity(intent)

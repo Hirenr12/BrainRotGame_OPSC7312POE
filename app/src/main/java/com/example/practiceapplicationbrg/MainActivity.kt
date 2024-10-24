@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.common.GoogleApiAvailability
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     private val channelID = "My Channel ID"
     private val TAG = "NotificationCheck"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
