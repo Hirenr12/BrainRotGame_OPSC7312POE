@@ -46,24 +46,26 @@ class Login : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Biometric Authentication
+        // Biometric Authentication setup
         executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    // Navigate to GamePortal after successful biometric authentication
-                    startActivity(Intent(this@Login, GamePortal::class.java))
-                    finish()
+                    if (UserSessionManager(this@Login).isLoggedIn()) {
+                        // Perform biometric login regardless of network state
+                        Toast.makeText(this@Login, "Biometric login successful", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@Login, GamePortal::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this@Login, "Login failed: No cached login found", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
                     Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
                     Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -74,10 +76,9 @@ class Login : AppCompatActivity() {
             .setNegativeButtonText("Use account password")
             .build()
 
-        // Set up biometric authentication on app launch or manually
+        // Set up biometric authentication if available
         val biometricManager = BiometricManager.from(this)
-        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) ==
-            BiometricManager.BIOMETRIC_SUCCESS) {
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS) {
             biometricPrompt.authenticate(promptInfo)
         }
 
@@ -90,7 +91,7 @@ class Login : AppCompatActivity() {
 
         // Set up Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id)) // Ensure you have this in strings.xml
             .requestEmail()
             .build()
 
@@ -101,7 +102,7 @@ class Login : AppCompatActivity() {
         val passwordField: EditText = findViewById(R.id.password)
         val submitButton: Button = findViewById(R.id.submit_button)
         val googleSignInButton: ImageView = findViewById(R.id.ic_google)
-        val txtSignInGoogle: TextView = findViewById(R.id.txtSignInGoogle)
+        val txtSignInGoogle: TextView = findViewById(R.id.txtSignInGoogle)  // Reference to the TextView
 
         // Set up the submit button click listener
         submitButton.setOnClickListener {
@@ -112,27 +113,43 @@ class Login : AppCompatActivity() {
         googleSignInButton.setOnClickListener {
             signInWithGoogle()
         }
-        txtSignInGoogle.setOnClickListener {
+        txtSignInGoogle.setOnClickListener {  // Make the TextView clickable
             signInWithGoogle()
         }
     }
 
     private fun loginUser(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, GamePortal::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
-                }
+        if (isOnline()) {
+            // Online mode: Authenticate using Firebase
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return
             }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Cache login details for offline use
+                        val userId = auth.currentUser?.uid ?: ""
+                        UserSessionManager(this).saveLoginDetails(userId, email, false)
+
+                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, GamePortal::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+        } else {
+            // Offline mode: Use cached credentials if available
+            if (UserSessionManager(this).isLoggedIn()) {
+                Toast.makeText(this, "Offline login successful", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, GamePortal::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "No internet and no cached login found", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun signInWithGoogle() {
@@ -143,6 +160,7 @@ class Login : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
@@ -153,20 +171,56 @@ class Login : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             account?.let {
-                val credential = GoogleAuthProvider.getCredential(it.idToken, null)
-                auth.signInWithCredential(credential)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Google login successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, GamePortal::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Google login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                if (isOnline()) {
+                    val credential = GoogleAuthProvider.getCredential(it.idToken, null)
+                    auth.signInWithCredential(credential)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Cache Google login details
+                                val userId = auth.currentUser?.uid ?: ""
+                                UserSessionManager(this).saveLoginDetails(userId, it.email ?: "", true)
+
+                                Toast.makeText(this, "Google login successful", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, GamePortal::class.java))
+                                finish()
+                            } else {
+                                Toast.makeText(this, "Google login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
+                } else if (UserSessionManager(this).isLoggedIn()) {
+                    // Offline login
+                    Toast.makeText(this, "Offline Google login successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, GamePortal::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this, "No cached Google login available", Toast.LENGTH_SHORT).show()
+                }
             }
         } catch (e: ApiException) {
             Toast.makeText(this, "Google sign-in failed: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // Function to check if device is online
+    private fun isOnline(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+        } else {
+            @Suppress("DEPRECATION")
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Notify the user about network state at startup
+        if (!isOnline()) {
+            Toast.makeText(this, "You are offline. Offline mode enabled.", Toast.LENGTH_SHORT).show()
         }
     }
 }
