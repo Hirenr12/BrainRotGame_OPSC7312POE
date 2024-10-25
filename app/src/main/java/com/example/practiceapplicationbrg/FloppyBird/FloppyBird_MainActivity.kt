@@ -72,6 +72,9 @@ class FloppyBird_MainActivity : AppCompatActivity() {
     private lateinit var highScoreViewModel: HighScoreViewModel
 
 
+    private var hasFetchedHighScores: Boolean = false
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,8 +172,15 @@ class FloppyBird_MainActivity : AppCompatActivity() {
         if (wasOnline == null || wasOnline != isOnline) {
             if (isOnline) {
                 Toast.makeText(this, "You are online!", Toast.LENGTH_SHORT).show()
+
+                // Fetch high scores only if they haven't been fetched yet
+                if (!hasFetchedHighScores) {
+                    fetchHighScoreDB()
+                    hasFetchedHighScores = true // Set the flag to true after fetching
+                }
             } else {
                 Toast.makeText(this, "You are offline. Your scores and points will be stored locally.", Toast.LENGTH_SHORT).show()
+                hasFetchedHighScores = false // Reset the flag when offline
             }
             // Update the previous status
             wasOnline = isOnline
