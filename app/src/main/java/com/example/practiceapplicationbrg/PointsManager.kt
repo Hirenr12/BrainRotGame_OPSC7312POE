@@ -4,30 +4,38 @@ import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 object PointsManager {
     fun updateUserPoints(firestore: FirebaseFirestore, auth: FirebaseAuth, pointsToAdd: Int, context: Context) {
         val user = auth.currentUser
         user?.let {
             val userRef = firestore.collection("users").document(it.uid)
-            firestore.runTransaction { transaction ->
-                val snapshot = transaction.get(userRef)
-                val currentPoints = snapshot.getLong("points") ?: 0
-                val newPoints = currentPoints + pointsToAdd
 
-                // Update the user's points
-                transaction.update(userRef, "points", newPoints)
+            // Retrieve current points (fallback to cache if needed)
+            userRef.get()
+                .addOnSuccessListener { snapshot ->
+                    val currentPoints = snapshot.getLong("points") ?: 0
+                    val newPoints = currentPoints + pointsToAdd
 
-                // Determine the new tier based on points
-                val newTier = getTierForPoints(newPoints.toInt())
-                if (newTier != snapshot.getString("tier")) {
-                    transaction.update(userRef, "tier", newTier)
+                    // Prepare data for updating points and tier
+                    val updateData = hashMapOf(
+                        "points" to newPoints,
+                        "tier" to getTierForPoints(newPoints.toInt())
+                    )
+
+                    // Update the user's points and tier, works offline too
+                    userRef.set(updateData, SetOptions.merge())
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Points and tier updated!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "Failed to update points/tier: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
                 }
-            }.addOnSuccessListener {
-                Toast.makeText(context, "Points and tier updated!", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener { e ->
-                Toast.makeText(context, "Failed to update points/tier: ${e.message}", Toast.LENGTH_LONG).show()
-            }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, "Failed to retrieve points: ${e.message}", Toast.LENGTH_LONG).show()
+                }
         }
     }
 
@@ -47,4 +55,3 @@ object PointsManager {
         }
     }
 }
-
