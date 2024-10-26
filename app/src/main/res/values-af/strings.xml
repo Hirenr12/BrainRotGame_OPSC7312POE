@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BrainRotGames</string>
+    <string name="brainrotgames">BrainRotGames</string>
+    <string name="brain_icon">Brein-ikoon</string>
+    <string name="LOGIN">AANMELD</string>
+    <string name="Register">Registreer</string>
+    <string name="settings">Instellings</string>
+    <string name="default_web_client_id">236017016549-0vu5rh3lo1unn1dpp2au7eebn1dumbhh.apps.googleusercontent.com</string>
+    <string name="msg_token_fmt">FCM Registrasie Token: %1$s</string>
+    <string name="sign_in_with_google">Meld aan met Google</string>
+    <string name="account_details">Rekeningbesonderhede</string>
+    <string name="username">Gebruikersnaam:</string>
+    <string name="points_0">Punte: 0</string>
+    <string name="tier">Vlak:</string>
+    <string name="privacy_policy">Privaatheidsbeleid</string>
+    <string name="privacy_policy_content"></string>
+    <string name="enter_new_username">Voer nuwe gebruikersnaam in</string>
+    <string name="save_changes">Stoor Veranderinge</string>
+    <string name="avatar">Avatar</string>
+    <string name="customize">Pas Aan</string>
+    <string name="enter_new_username1">Voer nuwe gebruikersnaam in</string>
+    <string name="save_changes1">Stoor Veranderinge</string>
+    <string name="back_to_game_portal"></string>
+    <string name="game_hub_support">Speletjie Hub Ondersteuning</string>
+    <string name="how_can_we_help_you_with_our_games">Hoe kan ons u met ons speletjies help?</string>
+    <string name="enter_your_question_here">Voer u vraag hier in</string>
+    <string name="get_help">Kry Hulp</string>
+    <string name="move_up">Skuif Op</string>
+    <string name="move_down">Skuif Af</string>
+    <string name="move_left">Skuif Links</string>
+    <string name="move_right">Skuif Regs</string>
+
+    <string-array name="tier_array">
+        <item>Vars Vleis</item>
+        <item>Besmet</item>
+        <item>Loper</item>
+        <item>Vrotter</item>
+        <item>Wedergeboorte</item>
+        <item>Nagstapper</item>
+        <item>Nekromant</item>
+        <item>Krygsheer</item>
+        <item>Verskrikker</item>
+    </string-array>
+
+    <!-- API Key stored here (not recommended for production apps) -->
+    <string name="generative_model_api_key">AIzaSyBBh_csSi8yQTFXX4AAVMTK7FbEZxqekzI</string>
+    <string name="tiktaktoe">TikTakToe</string>
+    <string name="tik_tak_toe_description">Tic-Tac-Toe is \'n klassieke tweespeler speletjie wat op \'n 3x3 rooster gespeel word. Spelers wissel beurte om \'n vierkant op die rooster te merk met óf \'n \'X\' óf \'n \'O.\' Die doel is om die eerste te wees om drie van u merke in \'n ry te kry, hetsy horisontaal, vertikaal of skuins. Die speletjie is eenvoudig, vinnig, en eindig dikwels in \'n gelykop as beide spelers optimaal speel.</string>
+
+    <string name="play">Speel</string>
+    <string name="tictactoe">TicTacToe</string>
+    <string name="tiktaktoe_button_1">TikTakToe Knoppie 1</string>
+    <string name="tiktaktoe_button_2">TikTakToe Knoppie 2</string>
+    <string name="tiktaktoe_button_3">TikTakToe Knoppie 3</string>
+    <string name="tiktaktoe_button_4">TikTakToe Knoppie 4</string>
+    <string name="tiktaktoe_button_5">TikTakToe Knoppie 5</string>
+    <string name="tiktaktoe_button_6">TikTakToe Knoppie 6</string>
+    <string name="tiktaktoe_button_7">TikTakToe Knoppie 7</string>
+    <string name="tiktaktoe_button_8">TikTakToe Knoppie 8</string>
+    <string name="tiktaktoe_button_9">TikTakToe Knoppie 9</string>
+    <string name="reset">Herstel</string>
+    <string name="choose_avatar">Kies Avatar:</string>
+    <string name="choose_avatar1">Kies Avatar</string>
+    <string name="choose_avatar2">Kies Avatar:</string>
+</resources>

@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import java.util.Locale
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -29,60 +31,42 @@ class SettingsActivity : AppCompatActivity() {
         val notificationsButton = findViewById<Button>(R.id.button_notifications)
         val supportFeatureButton = findViewById<Button>(R.id.button_support_feature)
         val communityButton = findViewById<Button>(R.id.button_community_activity)
-
-        communityButton.setOnClickListener {
-            // Account Details button click
-            val intent = Intent(this, CommunityActivity::class.java)
-            startActivity(intent)
-        }
+        val languageSelectorButton = findViewById<Button>(R.id.button_language_selector)
 
         accountDetailsButton.setOnClickListener {
-            // Account Details button click
             val intent = Intent(this, AccountDetailsActivity::class.java)
             startActivity(intent)
         }
 
         privacyPolicyButton.setOnClickListener {
-            // Privacy Policy button click
             val intent = Intent(this, PrivacyPolicyActivity::class.java)
             startActivity(intent)
         }
 
         notificationsButton.setOnClickListener {
-            // Notifications button click
-
-            // Create the notification channel (for Android 8.0+)
             createNotificationChannel()
-
-            // Check and prompt for notification settings
             checkNotificationSettings()
         }
 
         supportFeatureButton.setOnClickListener {
             Log.d("REDIRECT", "Redirecting to page")
-            // Support and Feedback button click
             val intent = Intent(this, SupportFeatureActivity::class.java)
             startActivity(intent)
             Log.d("REDIRECT", "Fail in Redirecting to page")
         }
 
+        communityButton.setOnClickListener {
+            val intent = Intent(this, CommunityActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Language Selector Button
+        languageSelectorButton.setOnClickListener {
+            showLanguageSelectorDialog()
+        }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private fun createNotificationChannel() {
-        // Only for Android 8.0 and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "My Notifications"
             val descriptionText = "Channel for my app notifications"
@@ -91,7 +75,6 @@ class SettingsActivity : AppCompatActivity() {
                 description = descriptionText
             }
 
-            // Register the channel with the system
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -100,22 +83,15 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
-
     private fun checkNotificationSettings() {
         val notificationManagerCompat = NotificationManagerCompat.from(this)
 
-        // 1. Check if global notifications are disabled
         if (!notificationManagerCompat.areNotificationsEnabled()) {
             Log.d(TAG, "Global notifications are disabled")
             showDeviceNotificationSettingsDialog()
             return
         }
 
-        // 2. For Android 8.0+ (API 26+), check the notification channel status
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val channel: NotificationChannel? = notificationManager.getNotificationChannel(channelID)
@@ -126,7 +102,6 @@ class SettingsActivity : AppCompatActivity() {
                 return
             }
 
-            // If channel exists, check if it's disabled
             if (channel.importance == NotificationManager.IMPORTANCE_NONE) {
                 Log.d(TAG, "Notification channel is disabled")
                 showAppNotificationSettingsDialog()
@@ -134,30 +109,20 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        // If everything is enabled
         Log.d(TAG, "All notifications are properly enabled")
     }
-
-
-
-
-
-
 
     private fun showDeviceNotificationSettingsDialog() {
         AlertDialog.Builder(this)
             .setTitle("Enable Notifications")
             .setMessage("Please enable notifications in your device settings to receive updates.")
             .setPositiveButton("Go to Settings") { _, _ ->
-                // Open device-wide notification settings
                 val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                     putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                 }
                 startActivity(intent)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
 
         Log.d(TAG, "Displayed global notification settings dialog")
@@ -179,4 +144,30 @@ class SettingsActivity : AppCompatActivity() {
         Log.d(TAG, "Displayed app-specific notification settings dialog")
     }
 
+    private fun showLanguageSelectorDialog() {
+        val languages = arrayOf("English", "Afrikaans")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select Language")
+        builder.setItems(languages) { _, which ->
+            val selectedLanguage = if (which == 0) "en" else "af"
+            setLocale(selectedLanguage)
+        }
+        builder.show()
+    }
+
+    private fun setLocale(localeCode: String) {
+        val locale = Locale(localeCode)
+        Locale.setDefault(locale)
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        // Apply the configuration to the context
+        createConfigurationContext(config)
+
+        // Start the MainActivity with the new locale
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 }
