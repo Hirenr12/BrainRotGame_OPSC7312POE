@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +25,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        // Apply saved language setting on start
+        setLocale(getSavedLanguage() ?: "en")
 
         // Set up buttons
         val accountDetailsButton = findViewById<Button>(R.id.button_account_details)
@@ -150,24 +154,41 @@ class SettingsActivity : AppCompatActivity() {
         builder.setTitle("Select Language")
         builder.setItems(languages) { _, which ->
             val selectedLanguage = if (which == 0) "en" else "af"
-            setLocale(selectedLanguage)
+            setLocaleAndSave(selectedLanguage)
         }
         builder.show()
     }
 
     private fun setLocale(localeCode: String) {
-        val locale = Locale(localeCode)
-        Locale.setDefault(locale)
-        val config = Configuration(resources.configuration)
-        config.setLocale(locale)
+        val currentLocale = resources.configuration.locales[0].language
+        if (currentLocale != localeCode) {
+            val locale = Locale(localeCode)
+            Locale.setDefault(locale)
+            val config = Configuration(resources.configuration)
+            config.setLocale(locale)
 
-        // Apply the configuration to the context
-        createConfigurationContext(config)
+            resources.updateConfiguration(config, resources.displayMetrics)
 
-        // Start the MainActivity with the new locale
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
+            // Restart the MainActivity with the new locale
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun setLocaleAndSave(localeCode: String) {
+        saveLanguage(localeCode)
+        setLocale(localeCode)
+    }
+
+    private fun saveLanguage(localeCode: String) {
+        val sharedPreferences = getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("Language", localeCode).apply()
+    }
+
+    private fun getSavedLanguage(): String? {
+        val sharedPreferences = getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("Language", "en")
     }
 }

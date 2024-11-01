@@ -14,14 +14,14 @@
     <string name="points_0">Punte: 0</string>
     <string name="tier">Vlak:</string>
     <string name="privacy_policy">Privaatheidsbeleid</string>
-    <string name="privacy_policy_content"></string>
+    <string name="privacy_policy_content">PP</string>
     <string name="enter_new_username">Voer nuwe gebruikersnaam in</string>
     <string name="save_changes">Stoor Veranderinge</string>
     <string name="avatar">Avatar</string>
     <string name="customize">Pas Aan</string>
     <string name="enter_new_username1">Voer nuwe gebruikersnaam in</string>
     <string name="save_changes1">Stoor Veranderinge</string>
-    <string name="back_to_game_portal"></string>
+    <string name="back_to_game_portal">Game Portal</string>
     <string name="game_hub_support">Speletjie Hub Ondersteuning</string>
     <string name="how_can_we_help_you_with_our_games">Hoe kan ons u met ons speletjies help?</string>
     <string name="enter_your_question_here">Voer u vraag hier in</string>
