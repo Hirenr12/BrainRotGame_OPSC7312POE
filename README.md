@@ -7,10 +7,11 @@
 ## Table of Contents
 
 - [Overview](#overview)
-- [ YouTube Link Has Audio](#youtube-link-has-audio)
+- [YouTube Link Has Audio](#youtube-link-has-audio)
 - [Features](#features)
 - [Firebase Authentication](#firebase-authentication)
 - [Firebase Firestore DB](#firebase-firestore-dB)
+- [Offline Functionality Overview](#pffline-functionality-overview)
 - [Games](#games)
 - [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
 - [Getting Started](#getting-started)
@@ -204,6 +205,40 @@ Firestore rules ensure that user data is secure and only accessible to authorize
 
 For more information, check out the official [Firestore documentation](https://firebase.google.com/docs/firestore).
 
+## Offline Functionality Overview
+
+The app is designed to provide a seamless offline experience, ensuring that essential features remain accessible even without internet connectivity.
+
+### Key Components
+
+1. **Network State Detection**
+   - The app checks the network status using `ConnectivityManager` in the Login activity.
+   - Based on the `isOnline` status, it either authenticates online with Firebase or uses cached credentials for offline access.
+
+2. **Session Management with UserSessionManager**
+   - User login details (e.g., user ID, email, login type) are stored in `SharedPreferences` via the `UserSessionManager`.
+   - Cached data enables users to log in offline, provided they logged in previously and remained logged in.
+
+3. **Offline Google, Biometric Login, email & password**
+   - Cached Google and and email & password biometric login credentials allow users to access the app offline if they initially logged in with Google or their biometrics or email & password.
+
+4. **Firestore Offline Persistence for ActivityPlayersJournal**
+   - Firestore’s offline persistence stores data locally, allowing access to user points and tier data offline.
+   - Data retrieval first attempts to pull from the server, and if offline, falls back to cached data (`Source.CACHE`), ensuring continuity of progress.
+
+5. **Error Handling and Notifications**
+   - Clear messages inform users when data isn’t available offline (e.g., “No cached data available”).
+   - Users are notified at launch if the app is operating in offline mode, setting expectations for limited functionality.
+
+6. **Points and Tiers Update**
+   - The app dynamically updates unlocked tiers based on cached points, allowing users to view their progress offline.
+   - Syncs automatically when connectivity resumes, maintaining a consistent user experience.
+
+### Benefits of Offline Functionality
+
+This approach optimizes accessibility and user experience by:
+- Providing core functionality offline, even with limited connectivity.
+- Automatically updating user data once the app reconnects, ensuring progress synchronization without additional steps.
 
 
 ## Games
