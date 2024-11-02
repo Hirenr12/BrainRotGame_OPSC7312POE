@@ -189,10 +189,29 @@ class FloppyBird_MainActivity : AppCompatActivity() {
 
     private fun displayHighScore() {
         Log.d(Tag, "Initiating displayHighScore")
-        fetchHighScoreApi { highScore ->
-            Log.d(Tag, "High Score fetched: $highScore")
-            tvHighScore.text = "High Score: $highScore"
-            Log.d(Tag, "High Score displayed successfully")
+
+        // Check if the user is offline
+        if (!NetworkUtil.isConnected(this)) {
+            val username = currentUserUsername ?: return
+            val gameName = "Floppy Bird"
+
+            // Observe the LiveData for the highest score from the ViewModel
+            highScoreViewModel.getHighestScore(username, gameName).observe(this, { highScoreData ->
+                highScoreData?.let {
+                    tvHighScore.text = "High Score: ${it.score}"
+                    Log.d(Tag, "Offline High Score displayed successfully: ${it.score}")
+                } ?: run {
+                    tvHighScore.text = "High Score: --"
+                    Log.d(Tag, "No offline high score found")
+                }
+            })
+        } else {
+            // If online, fetch and display the high score from the API
+            fetchHighScoreApi { highScore ->
+                Log.d(Tag, "High Score fetched: $highScore")
+                tvHighScore.text = "High Score: $highScore"
+                Log.d(Tag, "High Score displayed successfully")
+            }
         }
     }
 
@@ -460,7 +479,6 @@ class FloppyBird_MainActivity : AppCompatActivity() {
                         // If the local high score is higher than the one from the API, submit it
                         if (it.score > apiHighScore) {
                             submitScore(it.score)
-                            fetchAllPointsDB(username, gameName)
                             deleteAllScoresDB()
                         }
                     }
