@@ -40,14 +40,22 @@
 ### Login:
 
 The login feature allows users to access their accounts using either email/password authentication or Google Single Sign-On (SSO).
+Here's an updated README feature section with the language selection feature added:
+
 
 #### Features
+
 - **Email and Password Authentication**:
   - Users can enter their registered email and password to log in.
   - Validation ensures that both fields are filled before attempting to log in.
 
 - **Google Single Sign-On (SSO)**:
   - Users can log in using their Google account, simplifying the authentication process and enhancing user experience.
+
+- **Language Selection**:
+  - Users can choose between English and Afrikaans for the app's language, ensuring a more inclusive experience. 
+
+
 
 
 ### GamePortal
@@ -292,10 +300,6 @@ This approach optimizes accessibility and user experience by:
 - Players accumulate points throughout the game, which are added to their account after each session, reflecting their performance.
 - Scores are updated on the global leaderboard in real time, with high score validations and updates seamlessly managed by the app’s API, ensuring accurate ranking and recognition of player achievements.
 
-### Colour Matcher
-- A quick-thinking game where the player must determine whether the font color matches the word's spelling.
-- Players are shown words with different font colors and must answer True or False depending on whether the displayed font color matches the color the word spells out.
-- Points are awarded based on accuracy and speed, and these points contribute to both the global and private leaderboards.
 
 
 ## Prerequisites For Developer Usage
