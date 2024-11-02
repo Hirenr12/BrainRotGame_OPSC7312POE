@@ -86,7 +86,7 @@ The Players Journal aims to provide users with a sense of achievement and progre
 
 
 ### Players Journal:
--
+-A points-based tiering system that offers users a ranking structure, allowing them to showcase their progress by unlocking tiers. Users can compete to reach the top and earn bragging rights as they prove who's the best.
 
 ### Player Profile
 - Displays the user’s information such as Username, Tier, and total games played.
