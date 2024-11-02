@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="Leaderboard Image" />
+        android:contentDescription="@string/leaderboard_image" />
 
     <TextView
         android:id="@+id/helpDescription"
         android:textColor="@android:color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click on a users name to add them to your Private Leaderboard"
+        android:text="@string/click_on_a_users_name_to_add_them_to_your_private_leaderboard"
         android:textStyle="italic"
         android:textSize="16sp"
         android:textAlignment="center"
@@ -39,7 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Select Game"
+        android:hint="@string/select_game"
         app:layout_constraintTop_toBottomOf="@id/helpDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
             android:id="@+id/usernameHeading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="@string/floppy_username"
             android:textStyle="bold"
             android:textSize="16sp"
             android:gravity="center"
@@ -76,7 +76,7 @@
             android:id="@+id/scoreHeading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="High Score"
+            android:text="@string/floppy_high_score"
             android:textStyle="bold"
             android:textSize="16sp"
             android:gravity="center"

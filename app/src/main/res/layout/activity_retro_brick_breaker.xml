@@ -12,7 +12,7 @@
         android:id="@+id/highScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="High Score: 0"
+        android:text="@string/high_score_0"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:layout_margin="16dp"
@@ -22,7 +22,7 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score: 0"
+        android:text="@string/score_0"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:layout_margin="16dp"
@@ -66,6 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"
             android:layout_centerHorizontal="true"
-            android:text="New Game" />
+            android:text="@string/new_game" />
     </RelativeLayout>
 </RelativeLayout>

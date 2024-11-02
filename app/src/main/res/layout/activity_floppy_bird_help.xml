@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="164dp"
-        android:text="How to Play Floppy Bird"
+        android:text="@string/how_to_play_floppy_bird"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:padding="16dp"
-            android:text="🐦 Tap the screen to make the bird fly!\n\n\n🐦 Avoid the pipes and obstacles as you fly through the air.\n\n\n🐦 Try to get the highest score by passing through as many pipes as you can!\n\n\n🐦 Good luck and have fun!"
+            android:text="@string/tap_the_screen_to_make_the_bird_fly_n_n_n_avoid_the_pipes_and_obstacles_as_you_fly_through_the_air_n_n_n_try_to_get_the_highest_score_by_passing_through_as_many_pipes_as_you_can_n_n_n_good_luck_and_have_fun"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
     </androidx.cardview.widget.CardView>

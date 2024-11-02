@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:enabled="false"
-        android:hint="Username"
+        android:hint="@string/com_username"
         android:inputType="text"
         android:minHeight="48dp" />
 
@@ -22,7 +22,7 @@
         android:id="@+id/tipEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your tip"
+        android:hint="@string/enter_your_tip"
         android:inputType="textMultiLine"
         android:minLines="3"
         android:gravity="top"
@@ -33,7 +33,7 @@
         android:id="@+id/submitTipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Tip"
+        android:text="@string/submit_tip"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:layout_weight="1"
-        android:contentDescription="Tips list">
+        android:contentDescription="@string/tips_list">
 
         <LinearLayout
             android:id="@+id/tipLayout"
