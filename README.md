@@ -11,7 +11,7 @@
 - [Features](#features)
 - [Firebase Authentication](#firebase-authentication)
 - [Firebase Firestore DB](#firebase-firestore-dB)
-- [Offline Functionality Overview](#pffline-functionality-overview)
+- [Offline Functionality Overview](#offline-functionality-overview)
 - [Games](#games)
 - [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
 - [Getting Started](#getting-started)
