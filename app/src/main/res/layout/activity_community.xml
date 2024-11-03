@@ -1,57 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Username EditText (will be populated with the logged-in user's name) -->
-    <EditText
-        android:id="@+id/usernameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:enabled="false"
-        android:hint="Username"
-        android:inputType="text"
-        android:minHeight="48dp" />
-
-    <!-- Tip Content EditText -->
-    <EditText
-        android:id="@+id/tipEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your tip"
-        android:inputType="textMultiLine"
-        android:minLines="3"
-        android:gravity="top"
-        android:layout_marginBottom="12dp"/>
-
-    <!-- Submit Button -->
-    <Button
-        android:id="@+id/submitTipButton"
+    <!-- Community Page Heading at the top -->
+    <TextView
+        android:id="@+id/communityPageHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Tip"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:text="Community Page"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#9C27B0"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
-    <!-- LinearLayout to dynamically display the tips -->
+    <!-- ScrollView for dynamic tips, anchored below the heading and above the input area -->
     <ScrollView
+        android:id="@+id/tipsScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/communityPageHeading"
+        android:layout_above="@+id/inputLayout"
         android:fillViewport="true"
-        android:layout_weight="1"
         android:contentDescription="Tips list">
 
         <LinearLayout
             android:id="@+id/tipLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
     </ScrollView>
 
+    <!-- Input area with EditText and Button at the bottom -->
+    <LinearLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <!-- Username EditText (disabled, displays the logged-in user) -->
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:enabled="false"
+            android:hint="Username"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Tip Content EditText -->
+        <EditText
+            android:id="@+id/tipEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your tip"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Submit Button with green color and end alignment -->
+        <Button
+            android:id="@+id/submitTipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit Tip"
+            android:layout_gravity="end"
+            android:backgroundTint="#4CAF50" /> <!-- Green color -->
+
+    </LinearLayout>
+
+</RelativeLayout>
