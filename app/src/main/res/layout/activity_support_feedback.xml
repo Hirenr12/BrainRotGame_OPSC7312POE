@@ -12,7 +12,8 @@
         android:text="@string/game_hub_support"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:textColor="#9C27B0" /> <!-- Purple color -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,11 +22,25 @@
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/responseTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+    </ScrollView>
+
     <EditText
         android:id="@+id/questionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:autofillHints=""
         android:gravity="top|start"
         android:hint="@string/enter_your_question_here"
@@ -38,21 +53,9 @@
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:text="@string/get_help"
-        android:layout_marginBottom="16dp"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/responseTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
-
-    </ScrollView>
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#4CAF50" /> <!-- Green color -->
 
 </LinearLayout>

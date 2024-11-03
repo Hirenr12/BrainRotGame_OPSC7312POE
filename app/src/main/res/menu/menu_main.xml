@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profile"
+        android:title="@string/profile"
         android:textColor="@color/white"/>   <!-- Icon tint if needed -->
 
     <item
@@ -26,7 +26,7 @@
     <item
         android:id="@+id/action_leader_board"
         android:icon="@drawable/ic_leader_board"
-        android:title="Leaderboard"
+        android:title="@string/leaderboard"
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/white" />
@@ -34,20 +34,20 @@
     <item
         android:id="@+id/action_private_leader_board"
         android:icon="@drawable/ic_leader_board"
-        android:title="Private Leaderboard"
+        android:title="@string/private_leaderboard"
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/white" />
     <item
         android:id="@+id/action_journal"
-        android:title="Players Journal"
+        android:title="@string/menu_players_journal"
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/black" />
     <item
         android:id="@+id/action_sign_out"
         android:icon="@drawable/ic_sign_out"
-        android:title="Sign Out"
+        android:title="@string/sign_out"
         android:textColor="@color/black"
         app:showAsAction="never"
         app:iconTint="@color/black" />

@@ -22,7 +22,7 @@
       android:layout_alignParentStart="true"
       android:layout_marginStart="16dp"
       android:layout_marginTop="48dp"
-      android:text="High Score"
+      android:text="@string/high_score"
       android:textSize="18sp"
       android:textColor="@android:color/white"
       android:padding="8dp"
@@ -35,7 +35,7 @@
       android:layout_below="@id/tvHighScore"
       android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
-      android:text="Best Time"
+      android:text="@string/best_time"
       android:textSize="18sp"
       android:textColor="@android:color/white"
       android:padding="8dp"
@@ -50,7 +50,7 @@
       android:layout_marginStart="149dp"
       android:layout_marginBottom="100dp"
       android:visibility="invisible"
-      android:text="Clear Scores"
+      android:text="@string/clear_scores"
       android:textColor="@android:color/white"
       android:background="@android:color/black"/>
 

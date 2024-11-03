@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -21,6 +22,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Set the preferred language on startup
+        setLocale(getSavedLanguage() ?: "en")
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -89,7 +95,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setLocale(localeCode: String) {
+        val currentLocale = resources.configuration.locales[0].language
+        if (currentLocale != localeCode) {
+            val locale = Locale(localeCode)
+            Locale.setDefault(locale)
+            val config = Configuration(resources.configuration)
+            config.setLocale(locale)
 
+            resources.updateConfiguration(config, resources.displayMetrics)
+        }
+    }
+
+    private fun getSavedLanguage(): String? {
+        val sharedPreferences = getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("Language", "en")
+    }
 
 
 

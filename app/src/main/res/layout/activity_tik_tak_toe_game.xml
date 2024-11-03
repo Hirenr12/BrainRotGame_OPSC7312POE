@@ -120,7 +120,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:textColor="@color/black"
-        android:text="Player X's turn"
+        android:text="@string/player_x_s_turn"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
