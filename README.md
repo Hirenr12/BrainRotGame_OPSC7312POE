@@ -16,7 +16,7 @@
 - [Prerequisites For Developer Usage](#Prerequisites-for-developer-usage)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Privacy Policy](#privacy-policy)
+- [Playstore Privacy Policy](#playstore-privacy-policy)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
@@ -336,10 +336,9 @@ Future Use Upon app release, Firestore will handle real-time data for user inter
 
 ```
 
-## Privacy Policy
-   ```bash
-https://www.freeprivacypolicy.com/live/c3bdd7ba-3f3f-4920-9ead-b409403c687b
-```
+## Playstore Privacy Policy
+  
+[OPSC7312 BRAINROTGAMES Playstore Privacy Policy](https://www.freeprivacypolicy.com/live/c3bdd7ba-3f3f-4920-9ead-b409403c687b)
 ## Testing
 
 We have implemented automated testing in the CI/CD pipeline for this project using GitHub Actions. This testing process ensures code quality and functionality before any code is merged into the master branch. Here's how the testing is set up:
